@@ -1,16 +1,9 @@
 # Proyecto de Laboratorio Desarrollo Web
 
 ## Integrantes
-Alberto Castañeda Arana A01250647
-Adriana Paola Salinas García A01703675
-Max Burkle Goya A01702321
-
-## Prerequisitos
-Instalar antes para poder ejecutar
-```
-Python Version >= 3.8.1
-Flask (Instalado en el ambiente virtual dentro del proyecto para Windows)
-```
+* Alberto Castañeda Arana A01250647
+* Adriana Paola Salinas García A01703675
+* Max Burkle Goya A01702321
 
 ## Como Ejecutar
 Para poder ejecutar la aplicacion, debera utilizar el ambiente virtual dependiendo de su sistema operativo ejecutando el comando correspondiente.
@@ -21,13 +14,13 @@ $ venv-win\Scripts\activate
 (venv-win) $ _
 ```
 
-Con el ambiente virtual activado, ejecuta: 
+Ya que tienes el ambiente virtual activado , para iniciar la aplicacion ejecuta: 
 ```
 $ (venv) flask run
 (venv) $ _
 ```
 
-Para iniciar la aplicacion. Debera salir algo parecido a lo siguiente:
+Debera salir algo parecido a lo siguiente:
 ```
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
