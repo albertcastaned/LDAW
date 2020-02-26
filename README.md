@@ -5,6 +5,19 @@
 * Adriana Paola Salinas García A01703675
 * Max Burkle Goya A01702321
 
+## Como Correr Pruebas Automaticamente En Cada Commit
+En el directorio debera poner el comando:
+```
+$ venv-win\Scripts\activate
+(venv-win) $ bash scripts/install-hooks.bash
+```
+para instalar el Hook. Solo debera hacer esto una primera vez.
+
+Para saltar las pruebas en un commit utilicen:
+```
+git commit --no-verify -m "test"
+```
+
 ## Como Ejecutar
 Para poder ejecutar la aplicacion, debera utilizar el ambiente virtual dependiendo de su sistema operativo ejecutando el comando correspondiente.
 
