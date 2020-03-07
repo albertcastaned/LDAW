@@ -5,28 +5,36 @@
 * Adriana Paola Salinas García A01703675
 * Max Burkle Goya A01702321
 
-## Como Correr Pruebas Automaticamente En Cada Commit
-En el directorio debera poner el comando:
-```
-$ venv-win\Scripts\activate
-(venv-win) $ bash scripts/install-hooks.bash
-```
-para instalar el Hook. Solo debera hacer esto una primera vez.
+## Requisitos
+  * Python Version > 3.6.9
 
-Para saltar las pruebas en un commit utilicen:
-```
-git commit --no-verify -m "test"
-```
-
-## Como Ejecutar
-Para poder ejecutar la aplicacion, debera utilizar el ambiente virtual dependiendo de su sistema operativo ejecutando el comando correspondiente.
+## Configuracion Ambiente Virtual
+Para poder ejecutar la aplicacion, debera crear primero un ambiente virtual con el siguiente comando:
 
 ```
-$ . venv/bin/activate
-(venv) $ _
+$ python3 -m venv .env
 ```
 
-Ya que tienes el ambiente virtual activado , para iniciar la aplicacion ejecuta: 
+Ya que tienes el ambiente virtual creado , deberas activarlo siempre para empezar a trabajar con el comando: 
+
+```
+$source .env/bin/activate
+```
+
+Debera salir su prompt como:
+```
+(.env) $ 
+```
+
+La primera vez que activa su ambiente virtual necesitara instalar todas las dependencias con el comando:
+```
+pip3 install -r requirements.txt
+```
+
+
+## Ejecutar Flask
+
+Ya que tienes tu ambiente virtual activado con las dependencias instaladas, solo necesitar ejecutar lo siguiente para iniciar la aplicacion Flask:
 ```
 $ (venv) flask run
 (venv) $ _
@@ -39,4 +47,16 @@ Debera salir algo parecido a lo siguiente:
    Use a production WSGI server instead.
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
+
+### (Opcional) Como Correr Pruebas Automaticamente En Cada Commit 
+En el directorio debera poner el comando:
+```
+$ scripts/install-hooks.bash
+```
+para instalar el Hook. Solo debera hacer esto una primera vez.
+
+Para saltar las pruebas en un commit utilicen:
+```
+git commit --no-verify -m "test"
 ```
