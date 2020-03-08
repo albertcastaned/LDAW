@@ -52,7 +52,7 @@ Debera salir algo parecido a lo siguiente:
 ### (Opcional) Como Correr Pruebas Automaticamente En Cada Commit 
 En el directorio debera poner el comando:
 ```
-$ scripts/install-hooks.bash
+$ scripts/install-hooks.sh
 ```
 para instalar el Hook. Solo debera hacer esto una primera vez.
 
