@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from app import app
+from punto_venta import app
 
 class TestCase(unittest.TestCase):
     def test_prueba(self):
