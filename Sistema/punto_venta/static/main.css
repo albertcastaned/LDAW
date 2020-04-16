@@ -2,7 +2,6 @@
 
 body {
   background: #fff;
-  color: #1a1c1d;
   margin-top: 5rem;
   text-align: center;
 }
@@ -10,8 +9,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: #1a1c1d;
 }
-footer{
-    background: #4285F4;
-    color: white;
-
+nav a{
+  color: #fff;
+}
+nav a:hover{
+  color: rgb(193, 250, 193);
 }
