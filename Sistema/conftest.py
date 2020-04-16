@@ -1,11 +1,14 @@
-import os
+import os,sys
 import pytest
+sys.path.append(os.path.abspath(os.path.join('..', 'punto_venta')))
 
-
+from punto_venta import create_app,db as _db
 
 TESTDB = 'test.db'
 TESTDB_PATH = "/opt/project/data/{}".format(TESTDB)
 TEST_DATABASE_URI = 'sqlite:///' + TESTDB_PATH
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+
 
 
 @pytest.fixture(scope='session')
@@ -13,7 +16,12 @@ def app(request):
     """Session-wide test `Flask` application."""
     settings_override = {
         'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI
+        'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI,
+        'BCRYPT_LOG_ROUNDS': 4,
+        'WTF_CSRF_ENABLED': True,
+        'BASEDIR': os.path.abspath(os.path.dirname(__file__))
+
+
     }
     app = create_app(settings_override)
 
