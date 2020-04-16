@@ -13,6 +13,7 @@ def registrar_usuario():
         usuario = Usuario(nombre_usuario=form.nombre_usuario.data, email=form.email.data, contrasenia=hashed_password, nombre_completo=form.nombre_completo.data)
         db.session.add(usuario)
         db.session.commit()
+        print("Nuevo Usuario Creado")
         flash('La cuenta ha sido registrada exitosamente', 'success')
         return redirect(url_for('usuarios.usuarios_lista'))
     return render_template('registrar.html', titulo="Registrar Usuario", form=form)

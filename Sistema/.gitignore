@@ -148,7 +148,8 @@ db.sqlite3
 # Flask stuff:
 instance/
 .webassets-cache
-.app.db
+punto_venta/app.db
+punto_venta/test.db
 
 # Scrapy stuff:
 .scrapy

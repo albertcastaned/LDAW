@@ -1,31 +1,25 @@
 import os,sys
 import pytest
-sys.path.append(os.path.abspath(os.path.join('..', 'punto_venta')))
 
 from punto_venta import create_app,db as _db
 
 TESTDB = 'test.db'
-TESTDB_PATH = "/opt/project/data/{}".format(TESTDB)
-TEST_DATABASE_URI = 'sqlite:///' + TESTDB_PATH
+TEST_DATABASE_URI = 'sqlite:///' + TESTDB
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
-
+class Test_Config:
+    TESTING= True
+    SQLALCHEMY_DATABASE_URI= TEST_DATABASE_URI
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    WTF_CSRF_ENABLED= False
+    WTF_CSRF_METHODS= []
+    SECRET_KEY = os.urandom(24)
 @pytest.fixture(scope='session')
 def app(request):
-    """Session-wide test `Flask` application."""
-    settings_override = {
-        'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI,
-        'BCRYPT_LOG_ROUNDS': 4,
-        'WTF_CSRF_ENABLED': True,
-        'BASEDIR': os.path.abspath(os.path.dirname(__file__))
 
+    app = create_app(Test_Config)
 
-    }
-    app = create_app(settings_override)
-
-    # Establish an application context before running the tests.
     ctx = app.app_context()
     ctx.push()
 
@@ -42,12 +36,9 @@ def client(app):
 @pytest.fixture(scope='session')
 def db(app, request):
     """Session-wide test database."""
-    if os.path.exists(TESTDB_PATH):
-        os.unlink(TESTDB_PATH)
 
     def teardown():
         _db.drop_all()
-        os.unlink(TESTDB_PATH)
 
     _db.app = app
     _db.create_all()
