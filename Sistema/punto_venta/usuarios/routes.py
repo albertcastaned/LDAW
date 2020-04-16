@@ -35,6 +35,7 @@ def login():
         if user and bcrypt.check_password_hash(user.contrasenia, form.contrasenia.data):
             login_user(user)
             next_page = request.args.get('next')
+            flash('Ha iniciado sesion exitosamente', 'success')
             return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
             flash('Inicio de Sesion no fue exitoso. Verifica los campos', 'danger')
@@ -43,4 +44,5 @@ def login():
 @usuarios.route("/usuarios/logout")
 def logout():
     logout_user()
+    flash('Ha cerrado sesion exitosamente', 'success')
     return redirect(url_for('usuarios.login'))
