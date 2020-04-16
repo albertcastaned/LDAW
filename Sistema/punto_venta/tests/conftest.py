@@ -2,8 +2,6 @@ import os
 import pytest
 
 
-from punto_venta import create_app
-from punto_venta import db as _db
 
 TESTDB = 'test.db'
 TESTDB_PATH = "/opt/project/data/{}".format(TESTDB)
