@@ -1,5 +1,6 @@
 import sys, os
 
+from punto_venta import bcrypt
 
 from punto_venta.models import *
 from punto_venta.usuarios.forms import *
@@ -21,7 +22,7 @@ def test_get_view(client):
     resp = client.get("/usuarios/registrar")
     assert resp.status_code == 200
 
-def test_registro_vacios(client, session):
+def test_registrarUusario_vacios(client, session):
     input_nombre_usuario = ""
     input_contrasenia = ""
     input_confirmar_contrasenia = input_contrasenia
@@ -41,7 +42,7 @@ def test_registro_vacios(client, session):
     usuario = Usuario.query.filter(Usuario.nombre_usuario == input_nombre_usuario).first()
     assert usuario == None
 
-def test_registro_contrasenia_incorrecta(client, session):
+def test_registrarUusario_contrasenia_incorrecta(client, session):
     input_nombre_usuario = "albertcastaned"
     input_contrasenia = "pass1234"
     input_confirmar_contrasenia = "pass"
@@ -61,7 +62,7 @@ def test_registro_contrasenia_incorrecta(client, session):
     usuario = Usuario.query.filter(Usuario.nombre_usuario == input_nombre_usuario).first()
     assert usuario == None
 
-def test_registro_usuario_existente(client, session):
+def test_egistrarUusario_usuario_existente(client, session):
     usuario = Usuario(nombre_completo='Alberto Castaneda', nombre_usuario='albertcastaned', 
     email='a@gmail.com', contrasenia='password123', activo=True)
     session.add(usuario)
@@ -85,7 +86,7 @@ def test_registro_usuario_existente(client, session):
     )
     assert b"El nombre de ese usuario ya esta regisrado en el sistema" in response.data
 
-def test_registro_valido(client, session):
+def test_registrarUusario_valido(client, session):
     input_nombre_usuario = "albertcastaned343"
     input_contrasenia = "pass1234"
     input_confirmar_contrasenia = input_contrasenia
@@ -108,3 +109,33 @@ def test_registro_valido(client, session):
     assert usuario.contrasenia != input_contrasenia
     assert usuario.email == input_email
     assert usuario.nombre_completo == input_nombre_completo
+
+def login(client, username, password):
+    return client.post('/usuarios/login', data=dict(
+        nombre_usuario=username,
+        contrasenia=password
+    ), follow_redirects=True)
+
+def logout(client):
+    return client.get('/usuarios/logout', follow_redirects=True)
+
+def test_login_logout(client, session):
+    usuario = Usuario(nombre_completo='correcto', nombre_usuario='correcto', 
+    email='a@gmail.com', contrasenia=bcrypt.generate_password_hash('correcto').decode('utf-8'), activo=True)
+    session.add(usuario)
+    session.commit()
+
+    response = login(client, "incorrecto", "incorrecto")
+    assert b'Inicio de Sesion no fue exitoso. Verifica los campos' in response.data
+
+    response = login(client, "correcto", "incorrecto")
+    assert b'Inicio de Sesion no fue exitoso. Verifica los campos' in response.data
+
+    response = login(client, "incorrecto", "correcto")
+    assert b'Inicio de Sesion no fue exitoso. Verifica los campos' in response.data
+
+    response = login(client, "correcto", "correcto")
+    assert b'Ha iniciado sesion exitosamente' in response.data
+
+    response = logout(client)
+    assert b'Ha cerrado sesion exitosamente' in response.data
