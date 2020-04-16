@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="row titulo">
+                    <legend class="border-bottom mb-12"><h2>{{titulo}}</h2></legend>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-center">
+                            {{ form.nombre_usuario.label(class="form-control-label") }}
+
+                            {% if form.nombre_usuario.errors %}
+                                {{ form.nombre_usuario(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.nombre_usuario.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.nombre_usuario(class="form-control form-control-lg") }}
+                            {% endif %}
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.nombre_completo.label(class="form-control-label") }}
+    
+                        {% if form.nombre_completo.errors %}
+                            {{ form.nombre_completo(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.nombre_completo.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.nombre_completo(class="form-control form-control-lg") }}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <div class="col-md-6 col-center">
+
+                            {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.contrasenia.label(class="form-control-label") }}
+                    {% if form.contrasenia.errors %}
+                        {{ form.contrasenia(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.contrasenia.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.contrasenia(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.confirmar_contrasenia.label(class="form-control-label") }}
+                    {% if form.confirmar_contrasenia.errors %}
+                        {{ form.confirmar_contrasenia(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirmar_contrasenia.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirmar_contrasenia(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group text-center">
+                {{ form.submit(class="btn btn-outline-success") }}
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

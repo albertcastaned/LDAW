@@ -3,15 +3,29 @@
 body {
   background: #fff;
   margin-top: 5rem;
-  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
-
+main {
+  flex: 1 0 auto;
+}
 h1, h2, h3, h4, h5, h6 {
   color: #1a1c1d;
+  text-align: center;
 }
 nav a{
   color: #fff;
 }
 nav a:hover{
   color: rgb(193, 250, 193);
+}
+.col-center {
+  float: none;
+  margin: 0 auto;
+}
+
+.titulo{
+  margin-top: 25px;
+  margin-bottom: 50px;
 }
