@@ -37,6 +37,7 @@ Para iniciar el servidor en el ambiente virtual, debera correr
 
 ```
 export FLASK_APP=project.py
+export FLASK_ENV=development
 ```
 
 y luego
