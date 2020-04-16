@@ -6,12 +6,15 @@ body {
   margin-top: 5rem;
   text-align: center;
 }
-
+nav a{
+  color:white
+}
+nav a:hover{
+  color: rgb(182, 235, 195)
+}
 h1, h2, h3, h4, h5, h6 {
   color: #1a1c1d;
 }
 footer{
-    background: #4285F4;
     color: white;
-
 }
