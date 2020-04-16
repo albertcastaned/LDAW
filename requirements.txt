@@ -3,13 +3,17 @@ appdirs==1.4.3
 asgiref==3.2.3
 astroid==2.3.3
 attrs==19.3.0
+bcrypt==3.1.7
+cffi==1.14.0
 click==7.1.1
 distlib==0.3.0
 Django==3.0.3
 django-crispy-forms==1.9.0
 filelock==3.0.12
 Flask==1.1.1
+Flask-Bcrypt==0.7.1
 Flask-Migrate==2.5.3
+Flask-Perm==0.2.8
 Flask-SQLAlchemy==2.4.1
 Flask-Testing==0.8.0
 Flask-WTF==0.14.3
@@ -24,6 +28,7 @@ more-itertools==8.2.0
 packaging==20.3
 pluggy==0.13.1
 py==1.8.1
+pycparser==2.20
 pylint==2.4.4
 pyparsing==2.4.7
 pytest==5.4.1
