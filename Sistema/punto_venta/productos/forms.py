@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, NumberRange
 
 from punto_venta.models import *
 
@@ -20,9 +20,9 @@ class RegistarProductoForm(FlaskForm):
     marca_producto = StringField('Marca de Producto', validators=[DataRequired(message="Llena los datos"),
         Length(min=1, max=50, message="La longitud de la marca de producto debe de ser entre 1 y 50 caracteres")])
 
-    precio_venta = DecimalField('Precio de venta', places=2, validators=[DataRequired(message="Llena los datos")])
+    precio_venta = DecimalField('Precio de venta', places=2, validators=[DataRequired(message="Llena los datos"), NumberRange(min=0.01, max=None, message="El valor debe ser positivo y mayor que 0")])
 
-    precio_compra = DecimalField('Precio de compra', places=2, validators=[DataRequired(message="Llena los datos")])
+    precio_compra = DecimalField('Precio de compra', places=2, validators=[DataRequired(message="Llena los datos"), NumberRange(min=0.01, max=None, message="El valor debe ser positivo y mayor que 0")])
 
     proveedor = StringField('Nombre de Proveedor del producto', validators=[DataRequired(message="Llena los datos"),
         Length(min=5, max=500, message="Porfavor ingresa el nombre del proveedor del producto.")])
