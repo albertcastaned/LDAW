@@ -19,7 +19,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     bcrypt.init_app(app)
 
-    migrate = Migrate(app, db,compare_type=True)
+    Migrate(app, db,compare_type=True)
 
     from punto_venta.routes import main
     from punto_venta.compras_ventas.routes import compras_ventas
