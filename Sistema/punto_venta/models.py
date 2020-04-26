@@ -16,3 +16,16 @@ class Usuario(db.Model, UserMixin):
 
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
+
+class Producto(db.Model, UserMixin):
+    __tablename__ = 'Producto'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_producto = db.Column(db.String(150), nullable=False)
+    descripcion = db.Column(db.String(1000))
+    marca = db.Column(db.String(150),nullable=False)
+    precioVentaBase = db.Column(db.Float,nullable=False)
+    precioCompra = db.Column(db.Float,nullable=False)
+    proveedor = db.Column(db.String(150),nullable=False)
+
+    def __repr__(self):
+        return '<Producto: {}>'.format(self.nombre_producto)
