@@ -2,6 +2,7 @@ from punto_venta import db, login_manager
 from flask_login import UserMixin,current_user
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.schema import CreateTable
 
 Base = declarative_base()
 
@@ -25,6 +26,8 @@ class Usuario(db.Model, UserMixin, Base):
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
+print(CreateTable(Usuario.__table__))
+
 
 class Producto(db.Model, UserMixin, Base):
     __tablename__ = 'Producto'
@@ -43,6 +46,7 @@ class Producto(db.Model, UserMixin, Base):
     def __repr__(self):
         return '<Producto: {}>'.format(self.nombre_producto)
 
+print(CreateTable(Producto.__table__))
 
 class Compra(db.Model, Base):
     __tablename__ = 'Compras'
@@ -57,6 +61,7 @@ class Compra(db.Model, Base):
     def __repr__(self):
         return '<Compra: {}>'.format(self.id)
 
+print(CreateTable(Compra.__table__))
 
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
@@ -71,6 +76,7 @@ class Venta(db.Model, Base):
     def __repr__(self):
         return '<Venta: {}>'.format(self.id)
 
+print(CreateTable(Venta.__table__))
 
 class Inventario(db.Model, Base):
     __tablename__ = 'Inventario'
@@ -81,3 +87,5 @@ class Inventario(db.Model, Base):
 
     def __repr__(self):
         return '<Inventario: {}>'.format(self.id)
+
+print(CreateTable(Inventario.__table__))
