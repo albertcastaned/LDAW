@@ -13,12 +13,12 @@
         </thead>
 
         <tbody>
-            {% for usuario in usuarios.items %}
+            {% for usuario in usuarios %}
                 <tr>
-                    <td>{{usuario.nombre_usuario}}</td>
-                    <td>{{usuario.nombre_completo}}</td>
-                    <td>{{usuario.email}}</td>
-                    <td>{{usuario.activo}}</td>
+                    <td>{{usuario['nombre_usuario']}}</td>
+                    <td>{{usuario['nombre_completo']}}</td>
+                    <td>{{usuario['email']}}</td>
+                    <td>{{usuario['activo']}}</td>
                 </tr>
             {% endfor %}
         </tbody>

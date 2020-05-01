@@ -16,15 +16,15 @@
         </thead>
 
         <tbody>
-            {% for producto in productos.items %}
+            {% for producto in productos %}
                 <tr>
-                    <td>{{producto.id}}</td>
-                    <td>{{producto.nombre_producto}}</td>
-                    <td>{{producto.marca}}</td>
-                    <td>{{producto.precioVentaBase}}</td>
-                    <td>{{producto.precioCompra}}</td>
-                    <td>{{producto.proveedor}}</td>
-                    <td>{{producto.descripcion}}</td>
+                    <td>{{producto['id']}}</td>
+                    <td>{{producto['nombre_producto']}}</td>
+                    <td>{{producto['marca']}}</td>
+                    <td>{{producto['precioVentaBase']}}</td>
+                    <td>{{producto['precioCompra']}}</td>
+                    <td>{{producto['proveedor']}}</td>
+                    <td>{{producto['descripcion']}}</td>
                 </tr>
             {% endfor %}
         </tbody>

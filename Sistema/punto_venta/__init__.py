@@ -1,26 +1,12 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
 from punto_venta.config import Config
 
-
-db = SQLAlchemy()
-bcrypt = Bcrypt()
-login_manager = LoginManager()
-login_manager.login_view = 'usuarios.login'
-login_manager.login_message_category = 'info'
+API_URL = 'http://127.0.0.1:6000/api/v1/'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    db.init_app(app)
-    login_manager.init_app(app)
-    bcrypt.init_app(app)
-
-    Migrate(app, db,compare_type=True)
-
     from punto_venta.routes import main
     from punto_venta.compras_ventas.routes import compras_ventas
     from punto_venta.usuarios.routes import usuarios
