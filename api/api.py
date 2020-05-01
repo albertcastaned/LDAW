@@ -1,11 +1,35 @@
-from punto_venta import db, login_manager
+from flask import Flask, request
+from flask_restful import Resource, Api
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from flask_migrate import Migrate
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 from flask_login import UserMixin,current_user
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.schema import CreateTable
+import os
 
+class Config():
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = True
+    SECRET_KEY = os.urandom(24)
+
+app = Flask(__name__)
+app.config.from_object(Config)
+
+db = SQLAlchemy(app)
+api = Api(app)
+bcrypt = Bcrypt(app)
+marsh = Marshmallow(app)
+Migrate(app, db,compare_type=True)
+login_manager = LoginManager(app)
+login_manager.login_view = 'usuarios.login'
+login_manager.login_message_category = 'info'
+
+#Modelo
 Base = declarative_base()
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -26,7 +50,11 @@ class Usuario(db.Model, UserMixin, Base):
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
-
+class UsuarioSchema(marsh.Schema):
+    class Meta:
+        fields = ("id", "nombre_completo", "nombre_usuario", "email", "activo")
+usuario_schema = UsuarioSchema()
+usuarios_schema = UsuarioSchema(many=True)
 
 class Producto(db.Model, UserMixin, Base):
     __tablename__ = 'Producto'
@@ -84,3 +112,34 @@ class Inventario(db.Model, Base):
     def __repr__(self):
         return '<Inventario: {}>'.format(self.id)
 
+
+#Requests
+class Usuarios_lista(Resource):
+    def get(self):
+        usuarios = Usuario.query.all()
+        return usuarios_schema.dump(usuarios)
+
+class Usuarios_registrar(Resource):
+    def post(self):
+        nuevo_usuario = Usuario(
+            nombre_completo = request.json['nombre_completo'],
+            nombre_usuario = request.json['nombre_usuario'],
+            email = request.json['email'],
+            contrasenia = request.json['contrasenia'],
+        )
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+        return usuario_schema.dump(nuevo_usuario)
+
+class Usuario_detalle(Resource):
+    def get(self, usuario_id):
+        usuario = Usuario.query.get_or_404(usuario_id)
+        return usuario_schema.dump(usuario)
+
+api.add_resource(Usuarios_lista, '/api/v1/usuarios')
+api.add_resource(Usuarios_registrar, '/api/v1/usuarios/registrar')
+api.add_resource(Usuario_detalle, '/api/v1/usuarios/<int:usuario_id>')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
