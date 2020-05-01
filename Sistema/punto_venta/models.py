@@ -26,7 +26,6 @@ class Usuario(db.Model, UserMixin, Base):
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
-print(CreateTable(Usuario.__table__))
 
 
 class Producto(db.Model, UserMixin, Base):
@@ -46,7 +45,6 @@ class Producto(db.Model, UserMixin, Base):
     def __repr__(self):
         return '<Producto: {}>'.format(self.nombre_producto)
 
-print(CreateTable(Producto.__table__))
 
 class Compra(db.Model, Base):
     __tablename__ = 'Compras'
@@ -61,7 +59,6 @@ class Compra(db.Model, Base):
     def __repr__(self):
         return '<Compra: {}>'.format(self.id)
 
-print(CreateTable(Compra.__table__))
 
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
@@ -76,7 +73,6 @@ class Venta(db.Model, Base):
     def __repr__(self):
         return '<Venta: {}>'.format(self.id)
 
-print(CreateTable(Venta.__table__))
 
 class Inventario(db.Model, Base):
     __tablename__ = 'Inventario'
@@ -88,4 +84,3 @@ class Inventario(db.Model, Base):
     def __repr__(self):
         return '<Inventario: {}>'.format(self.id)
 
-print(CreateTable(Inventario.__table__))
