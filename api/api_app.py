@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -10,7 +10,6 @@ from model import *
 import os, json
 from sqlalchemy.exc import IntegrityError
 
-
 class Config():
     SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -21,7 +20,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 db = SQLAlchemy(app)
-api = Api(app)
+api = Api(app, prefix="/api/v1")
 bcrypt = Bcrypt(app)
 marsh = Marshmallow(app)
 Migrate(app, db,compare_type=True)
@@ -65,8 +64,9 @@ class Usuarios_registrar(Resource):
             nombre_completo = request.json['nombre_completo'],
             nombre_usuario = request.json['nombre_usuario'],
             email = request.json['email'],
-            contrasenia = request.json['contrasenia'],
+            contrasenia = bcrypt.generate_password_hash(request.json['contrasenia']),
         )
+
         db.session.add(nuevo_usuario)
         try:
             db.session.commit()
@@ -82,13 +82,33 @@ class Usuario_detalle(Resource):
         usuario = Usuario.query.get_or_404(usuario_id)
         return usuario_schema.dump(usuario)
 
+class Login(Resource):
+    def post(self):
 
-api.add_resource(Productos_lista, '/api/v1/productos/<int:page>')
-api.add_resource(Producto_registrar, '/api/v1/productos/registrar/')
-api.add_resource(Usuarios_lista, '/api/v1/usuarios/<int:page>/')
-api.add_resource(Usuarios_registrar, '/api/v1/usuarios/registrar/')
-api.add_resource(Usuario_detalle, '/api/v1/usuario/<int:usuario_id>/')
+        username = request.json['username']
+        password = request.json['password']
+ 
+        if not username:
+            return jsonify({"msg": "Missing username parameter"}), 400
+        if not password:
+            return jsonify({"msg": "Missing password parameter"}), 400
 
+        user = Usuario.query.filter_by(nombre_usuario=username).first()
+        
+        if user and bcrypt.check_password_hash(user.contrasenia, password):
+            return {
+                'message': 'Successful logged in','username':str(username)
+            }, 200
+
+        return {"message":"Invalid credentials"}, 401
+
+
+api.add_resource(Productos_lista, '/productos/<int:page>')
+api.add_resource(Producto_registrar, '/productos/registrar/')
+api.add_resource(Usuarios_lista, '/usuarios/<int:page>/')
+api.add_resource(Usuarios_registrar, '/usuarios/registrar/')
+api.add_resource(Usuario_detalle, '/usuario/<int:usuario_id>/')
+api.add_resource(Login, '/login/')
 
 if __name__ == '__main__':
     app.run(debug=True,host='127.0.0.1', port=6000)

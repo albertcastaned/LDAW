@@ -4,6 +4,7 @@ from punto_venta.config import Config
 
 API_URL = 'http://127.0.0.1:6000/api/v1/'
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)

@@ -14,8 +14,13 @@
               </div>
 
         <div class="navbar-nav">
-          </div>
-          </div>
+            {% if session['logged_in'] %}
+                <a class="nav-item nav-link" href=""><ion-icon class="icon-nav" name="log-out" size="large"></ion-icon><span class="icon-nav">{{ session['username'] }}</span></a>
+               <a class="nav-item nav-link" href="{{ url_for('usuarios.logout') }}"><ion-icon class="icon-nav" name="log-out" size="large"></ion-icon><span class="icon-nav">Cerrar Sesion</span></a>
+            {% else %}
+              <a class="nav-item nav-link" href="{{ url_for('usuarios.login') }}"><ion-icon class="icon-nav" name="log-in" size="large"></ion-icon><span class="icon-nav">Iniciar Sesion</span></a>
+              <a class="nav-item nav-link" href="{{ url_for('usuarios.registrar_usuario') }}"><ion-icon class="icon-nav" name="person-add" size="large"></ion-icon><span class="icon-nav">Registrar Usuario</span></a>
+            {% endif %}
         </div>
     </nav>
   </header>

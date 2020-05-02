@@ -2,9 +2,13 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from punto_venta.productos.forms import *
 import requests, json
 from punto_venta import API_URL
+from punto_venta.utils import login_required
 
 productos = Blueprint('productos', __name__, template_folder='templates')
+
+
 @productos.route("/productos/registrar", methods=['GET', 'POST'])
+@login_required
 def registrar_producto():
     form = RegistarProductoForm()
     if form.validate_on_submit():
@@ -30,6 +34,7 @@ def registrar_producto():
     return render_template('registrar_producto.html', titulo="Registrar Producto", form=form)
 
 @productos.route("/productos/", methods=['GET'])
+@login_required
 def productos_lista():
     page = request.args.get('pagina', 1, type=int)
     response = requests.get(API_URL + "productos/" + str(page))

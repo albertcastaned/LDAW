@@ -1,10 +1,14 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint, jsonify
+from flask import render_template, url_for, flash, redirect, request, Blueprint, jsonify, session
 from punto_venta.usuarios.forms import *
 from punto_venta import API_URL
 import requests, json
+from punto_venta.utils import login_required
+
 usuarios = Blueprint('usuarios', __name__, template_folder='templates')
 
+
 @usuarios.route("/usuarios/registrar", methods=['GET', 'POST'])
+@login_required
 def registrar_usuario():
     form = RegistarUsuarioForm()
     if form.validate_on_submit():
@@ -34,19 +38,25 @@ def usuarios_lista():
     page = request.args.get('page', 1, type=int)
     response = requests.get(API_URL + "usuarios/" + str(page))
     return render_template('usuarios_lista.html', usuarios=response.json(), titulo="Lista de Usuarios")
-'''
 
 @usuarios.route("/usuarios/login", methods=['GET','POST'])
 def login():
-    if current_user.is_authenticated:
+    if 'logged_in' in session:
+        flash('Ya tiene una sesion activa', 'info')
         return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = Usuario.query.filter_by(nombre_usuario=form.nombre_usuario.data).first()
-        if user and bcrypt.check_password_hash(user.contrasenia, form.contrasenia.data):
-            login_user(user)
-            next_page = request.args.get('next')
+        post_data = {
+            'username':form.nombre_usuario.data,
+            'password':form.contrasenia.data,
+        }
+        response = requests.post(API_URL + "login/", json = post_data)
+
+        if response.status_code == 200:
             flash('Ha iniciado sesion exitosamente', 'success')
+            session['logged_in'] = True
+            session['username'] = response.json()['username']
+            next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
             flash('Inicio de Sesion no fue exitoso. Verifica los campos', 'danger')
@@ -54,7 +64,6 @@ def login():
 
 @usuarios.route("/usuarios/logout")
 def logout():
-    logout_user()
+    session.clear()
     flash('Ha cerrado sesion exitosamente', 'success')
     return redirect(url_for('usuarios.login'))
-'''

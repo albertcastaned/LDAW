@@ -2,6 +2,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from api_app import db, marsh
 from flask_bcrypt import generate_password_hash, check_password_hash
+
 #Modelo
 Base = declarative_base()
 
