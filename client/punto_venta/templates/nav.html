@@ -1,0 +1,26 @@
+<header class="site-header">
+    <nav class="navbar navbar-expand-md bg-success text-white fixed-top">
+      <div class="container">
+        <a class="navbar-brand mr-4 " href="/">Punto de Venta</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{{ url_for('main.index') }}">Home</a>
+          </div>
+              <div class="navbar-nav mr-auto">
+              </div>
+
+        <div class="navbar-nav">
+            {% if session['logged_in'] %}
+                <a class="nav-item nav-link" href=""><ion-icon class="icon-nav" name="log-out" size="large"></ion-icon><span class="icon-nav">{{ session['username'] }}</span></a>
+               <a class="nav-item nav-link" href="{{ url_for('usuarios.logout') }}"><ion-icon class="icon-nav" name="log-out" size="large"></ion-icon><span class="icon-nav">Cerrar Sesion</span></a>
+            {% else %}
+              <a class="nav-item nav-link" href="{{ url_for('usuarios.login') }}"><ion-icon class="icon-nav" name="log-in" size="large"></ion-icon><span class="icon-nav">Iniciar Sesion</span></a>
+              <a class="nav-item nav-link" href="{{ url_for('usuarios.registrar_usuario') }}"><ion-icon class="icon-nav" name="person-add" size="large"></ion-icon><span class="icon-nav">Registrar Usuario</span></a>
+            {% endif %}
+        </div>
+    </nav>
+  </header>
