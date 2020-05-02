@@ -41,7 +41,6 @@ class Producto_registrar(Resource):
             precioVentaBase = request.json['precioVentaBase'],
             precioCompra = request.json['precioCompra'],
             proveedor = request.json['proveedor'],
-
         )
         db.session.add(nuevo_producto)
         try:
