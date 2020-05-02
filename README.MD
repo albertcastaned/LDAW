@@ -31,18 +31,18 @@ La primera vez que activa su ambiente virtual necesitara instalar todas las depe
 (.env) $ pip3 install -r requirements.txt
 ```
 
-
-## Iniciar Servidor local
-Para iniciar el servidor en el ambiente virtual, debera correr
+## Iniciar API REST
+Para iniciar la aplicacion API, utiliza el script:
 
 ```
-(.env) $ export FLASK_APP=project.py
-(.env) $ export FLASK_ENV=development
+(.env) $ ./start_api.sh
 ```
 
-y luego
+## Iniciar aplicacion web cliente
+Para iniciar la aplicacion cliente en el ambiente virtual, utiliza el script:
+
 ```
-(.env) $ flask run
+(.env) $ ./start_client.sh
 ```
 
 Debera salir algo parecido a:
@@ -56,15 +56,17 @@ $ flask run
  * Debugger PIN: 572-008-498
 ```
 
+La aplicacion cliente consumira la API, asi que esta debe estar corriendo al mismo tiempo para que el cliente funcione.
+
 ## Base de Datos
 
-Para actualizar los migrations cuando se agregan tablas o se cambia alguna tabla:
+Para generar nuevas migraciones si es que se agregan tablas o se cambia alguna tabla:
 ```
-$ flask db migrate
+$ ./migrate.sh
 ```
 
-Para iniciar o actualizar la base de datos con los migrations:
+Para iniciar o actualizar la base de datos con las migraciones:
 ```
-$ flask db upgrade
+$ ./makemigrations.sh
 ```
 
