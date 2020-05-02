@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from app_api import db, marsh
+from .db import db, marsh
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 #Modelo
@@ -21,11 +21,6 @@ class Usuario(db.Model , Base):
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
-    def hash_password(self):
-        self.contrasenia = generate_password_hash(self.contrasenia).decode('utf8')
-    
-    def check_password(self,contrasenia):
-        return check_password_hash(self.contrasenia, contrasenia)
     
 class UsuarioSchema(marsh.Schema):
     class Meta:

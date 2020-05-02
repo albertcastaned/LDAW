@@ -8,7 +8,6 @@ usuarios = Blueprint('usuarios', __name__, template_folder='templates')
 
 
 @usuarios.route("/usuarios/registrar", methods=['GET', 'POST'])
-@login_required
 def registrar_usuario():
     form = RegistarUsuarioForm()
     if form.validate_on_submit():

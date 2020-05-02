@@ -1,32 +1,11 @@
+
 from flask import Flask, request, Response, jsonify
-from flask_restful import Resource, Api
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from flask_migrate import Migrate
-from flask_bcrypt import Bcrypt
-from flask import request, Response
+from database.model import *
+from database.db import bcrypt
 from flask_restful import Resource
-from model import *
 import os, json
-from sqlalchemy.exc import IntegrityError
-
-class Config():
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DEBUG = True
-    SECRET_KEY = os.urandom(24)
-
-app = Flask(__name__)
-app.config.from_object(Config)
-
-db = SQLAlchemy(app)
-api = Api(app, prefix="/api/v1")
-bcrypt = Bcrypt(app)
-marsh = Marshmallow(app)
-Migrate(app, db,compare_type=True)
 
 #Requests
-
 class Productos_lista(Resource):
     def get(self, page):
         productos = Producto.query.paginate(page=page, per_page=10).items
@@ -100,14 +79,3 @@ class Login(Resource):
             }, 200
 
         return {"message":"Invalid credentials"}, 401
-
-
-api.add_resource(Productos_lista, '/productos/<int:page>')
-api.add_resource(Producto_registrar, '/productos/registrar/')
-api.add_resource(Usuarios_lista, '/usuarios/<int:page>/')
-api.add_resource(Usuarios_registrar, '/usuarios/registrar/')
-api.add_resource(Usuario_detalle, '/usuario/<int:usuario_id>/')
-api.add_resource(Login, '/login/')
-
-if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1', port=6000)
