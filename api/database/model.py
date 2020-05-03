@@ -71,6 +71,7 @@ class Compra(db.Model, Base):
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
     id = db.Column(db.Integer, primary_key=True)
+    ticket = db.Column(db.Integer, nullable=False)
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('Producto.id'))
     precioVenta = db.Column(db.Float, nullable=False)
