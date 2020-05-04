@@ -20,7 +20,7 @@ def registrar_producto():
             'precioCompra':str(form.precio_compra.data),
             'proveedor':form.proveedor.data
         }
-        response = requests.post(API_URL + "productos/registrar/", json = post_data)
+        response = requests.post(API_URL + "productos/registrar", json = post_data)
 
         if(response.status_code == 200):
             flash('El producto a sido registrado exitosamente', 'success')

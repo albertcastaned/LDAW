@@ -17,7 +17,7 @@ def registrar_usuario():
             'email':form.email.data,
             'contrasenia':form.contrasenia.data
         }
-        response = requests.post(API_URL + "usuarios/registrar/", json = post_data)
+        response = requests.post(API_URL + "usuarios/registrar", json = post_data)
 
         if(response.status_code == 200):
             flash('La cuenta ha sido registrada exitosamente', 'success')
@@ -49,7 +49,7 @@ def login():
             'username':form.nombre_usuario.data,
             'password':form.contrasenia.data,
         }
-        response = requests.post(API_URL + "login/", json = post_data)
+        response = requests.post(API_URL + "login", json = post_data)
 
         if response.status_code == 200:
             flash('Ha iniciado sesion exitosamente', 'success')
