@@ -2,7 +2,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from .db import db, marsh
 from flask_bcrypt import generate_password_hash, check_password_hash
-
+from marshmallow import fields
 #Modelo
 Base = declarative_base()
 
@@ -92,3 +92,9 @@ class Inventario(db.Model, Base):
 
     def __repr__(self):
         return '<Inventario: {}>'.format(self.id)
+
+class InventarioSchema(marsh.Schema):
+    cantidad = fields.Integer()
+    producto = fields.Nested(ProductoSchema)
+
+inventario_schema = InventarioSchema(many=True)

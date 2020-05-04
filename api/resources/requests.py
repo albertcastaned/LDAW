@@ -22,6 +22,14 @@ class Producto_registrar(Resource):
             proveedor = request.json['proveedor'],
         )
         db.session.add(nuevo_producto)
+
+        nuevo_inventario = Inventario(
+            producto = nuevo_producto,
+            cantidad = 0,
+        )
+
+        db.session.add(nuevo_inventario)
+
         try:
             db.session.commit()
         except IntegrityError as error:
@@ -79,3 +87,8 @@ class Login(Resource):
             }, 200
 
         return {"message":"Invalid credentials"}, 401
+
+class Inventario_view(Resource):
+    def get(self, page):
+        inventario = Inventario.query.paginate(page=page, per_page=10).items
+        return inventario_schema.dump(inventario)

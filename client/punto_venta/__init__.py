@@ -12,9 +12,12 @@ def create_app(config_class=Config):
     from punto_venta.compras_ventas.routes import compras_ventas
     from punto_venta.usuarios.routes import usuarios
     from punto_venta.productos.routes import productos
+    from punto_venta.inventario.routes import inventario
+
     app.register_blueprint(usuarios)
     app.register_blueprint(productos)
     app.register_blueprint(main)
     app.register_blueprint(compras_ventas)
-
+    app.register_blueprint(inventario)
+    
     return app
