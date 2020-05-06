@@ -4,12 +4,12 @@ from database.model import *
 from database.db import bcrypt
 from flask_restful import Resource
 import os, json
-
+import datetime
 #Requests
 class Productos_lista(Resource):
     def get(self, page):
         productos = Producto.query.paginate(page=page, per_page=10).items
-        return productos_schema.dump(productos)
+        return producto_schema.dump(productos)
 
 class Producto_registrar(Resource):
     def post(self):
@@ -37,7 +37,7 @@ class Producto_registrar(Resource):
             return Response(response=json.dumps(dict(error='UNIQUE constraint error')),
                     status=501, mimetype='application/json'
                 )
-        return usuario_schema.dump(nuevo_producto)
+        return producto_schema.dump(nuevo_producto)
 
 class Usuarios_lista(Resource):
     def get(self, page):
@@ -92,3 +92,23 @@ class Inventario_view(Resource):
     def get(self, page):
         inventario = Inventario.query.paginate(page=page, per_page=10).items
         return inventario_schema.dump(inventario)
+    
+class Compra_view(Resource):
+    def post(self):
+
+        nueva_compra = Compra(
+            id_usuario = request.json['id_usuario'],
+            id_producto = request.json['id_producto'],
+            precioCompra = request.json['precioCompra'],
+            cantidad = request.json['cantidad'],
+            total = float(precioCompra) * float(cantidad),
+            fecha = datetime.datetime.utcnow
+        )
+        db.session.add(nueva_compra)
+
+        registro_inventario = Inventario.query.filter_by(id_producto=nueva_compra.id_producto).first()
+        registro_inventario.cantidad = registro_inventario.cantidad + nueva_compra.cantidad
+        
+        db.session.commit()
+
+        return compras_schema.dump(nueva_compra)

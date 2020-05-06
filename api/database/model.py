@@ -67,6 +67,12 @@ class Compra(db.Model, Base):
     def __repr__(self):
         return '<Compra: {}>'.format(self.id)
 
+class CompraSchema(marsh.Schema):
+    class Meta:
+        fields = ("id", "id_usuario", "id_producto", "precioCompra", "cantidad", "total","fecha")
+
+compras_schema = CompraSchema(many=True)
+
 
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
