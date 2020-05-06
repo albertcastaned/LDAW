@@ -6,6 +6,8 @@
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+#icloud
+*.icloud
 
 # Databases
 *.db
