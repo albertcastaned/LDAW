@@ -71,7 +71,7 @@ class CompraSchema(marsh.Schema):
     class Meta:
         fields = ("id", "id_usuario", "id_producto", "precioCompra", "cantidad", "total","fecha")
 
-compras_schema = CompraSchema(many=True)
+compras_schema = CompraSchema()
 
 
 class Venta(db.Model, Base):

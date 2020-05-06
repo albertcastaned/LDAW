@@ -4,7 +4,7 @@ from database.model import *
 from database.db import bcrypt
 from flask_restful import Resource
 import os, json
-import datetime
+from datetime import date
 #Requests
 class Productos_lista(Resource):
     def get(self, page):
@@ -83,7 +83,7 @@ class Login(Resource):
         
         if user and bcrypt.check_password_hash(user.contrasenia, password):
             return {
-                'message': 'Successful logged in','username':str(username)
+                'message': 'Successful logged in','username':str(username), 'id':int(user.id)
             }, 200
 
         return {"message":"Invalid credentials"}, 401
@@ -101,8 +101,8 @@ class Compra_view(Resource):
             id_producto = request.json['id_producto'],
             precioCompra = request.json['precioCompra'],
             cantidad = request.json['cantidad'],
-            total = float(precioCompra) * float(cantidad),
-            fecha = datetime.datetime.utcnow
+            total = float(request.json['precioCompra']) * float(request.json['cantidad']),
+            fecha = date.today()
         )
         db.session.add(nueva_compra)
 

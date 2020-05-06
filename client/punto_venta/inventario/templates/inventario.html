@@ -2,7 +2,13 @@
 {% block content %}
 <div class="container border p-4 mb-6 mt-6">
     <h2>{{titulo}}</h2>
-    <table class="table">
+
+    <div class="row">
+        <input type="text" class="form-control form-control-lg" id="inventario-input" placeholder="Buscar por nombre de producto...">
+    </div>
+    <div class="row">
+
+    <table class="table" >
         <thead>
             <tr>
                 <th scope="col">Producto</th>
@@ -11,7 +17,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="inventario-table-body">
             {% for producto in inventario %}
                 <tr>
                     <td>{{producto['producto']['nombre_producto']}}</td>
@@ -23,4 +29,8 @@
 
     </table>
 </div>
+
+</div>
+
+
 {% endblock content %}

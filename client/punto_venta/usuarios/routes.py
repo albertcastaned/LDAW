@@ -53,6 +53,7 @@ def login():
 
         if response.status_code == 200:
             flash('Ha iniciado sesion exitosamente', 'success')
+            session['user_id'] = response.json()['id']
             session['logged_in'] = True
             session['username'] = response.json()['username']
             next_page = request.args.get('next')
