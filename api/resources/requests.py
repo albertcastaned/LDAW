@@ -5,11 +5,13 @@ from database.db import bcrypt
 from flask_restful import Resource
 import os, json
 from datetime import date
+from sqlalchemy.exc import IntegrityError
+
 #Requests
 class Productos_lista(Resource):
     def get(self, page):
         productos = Producto.query.paginate(page=page, per_page=10).items
-        return producto_schema.dump(productos)
+        return productos_schema.dump(productos)
 
 class Producto_registrar(Resource):
     def post(self):
@@ -37,7 +39,7 @@ class Producto_registrar(Resource):
             return Response(response=json.dumps(dict(error='UNIQUE constraint error')),
                     status=501, mimetype='application/json'
                 )
-        return producto_schema.dump(nuevo_producto)
+        return 'OK', 201
 
 class Usuarios_lista(Resource):
     def get(self, page):
@@ -56,12 +58,12 @@ class Usuarios_registrar(Resource):
         db.session.add(nuevo_usuario)
         try:
             db.session.commit()
-        except IntegrityError as error:
+        except IntegrityError:
             db.session.rollback()
             return Response(response=json.dumps(dict(error='UNIQUE constraint error')),
                     status=501, mimetype='application/json'
                 )
-        return usuario_schema.dump(nuevo_usuario)
+        return 'OK', 201
 
 class Usuario_detalle(Resource):
     def get(self, usuario_id):
@@ -95,20 +97,21 @@ class Inventario_view(Resource):
     
 class Compra_view(Resource):
     def post(self):
+        compras = request.json
+        for compra in compras:
+            nueva_compra = Compra(
+                id_usuario = compra['id_usuario'],
+                id_producto = compra['id_producto'],
+                precioCompra = compra['precioCompra'],
+                cantidad = compra['cantidad'],
+                total = float(compra['precioCompra']) * float(compra['cantidad']),
+                fecha = date.today()
+            )
+            db.session.add(nueva_compra)
 
-        nueva_compra = Compra(
-            id_usuario = request.json['id_usuario'],
-            id_producto = request.json['id_producto'],
-            precioCompra = request.json['precioCompra'],
-            cantidad = request.json['cantidad'],
-            total = float(request.json['precioCompra']) * float(request.json['cantidad']),
-            fecha = date.today()
-        )
-        db.session.add(nueva_compra)
-
-        registro_inventario = Inventario.query.filter_by(id_producto=nueva_compra.id_producto).first()
-        registro_inventario.cantidad = registro_inventario.cantidad + nueva_compra.cantidad
-        
+            registro_inventario = Inventario.query.filter_by(id_producto=nueva_compra.id_producto).first()
+            registro_inventario.cantidad = float(registro_inventario.cantidad) + float(nueva_compra.cantidad)
+            print(nueva_compra)
         db.session.commit()
 
-        return compras_schema.dump(nueva_compra)
+        return 'OK', 201

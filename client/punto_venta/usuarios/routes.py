@@ -19,7 +19,7 @@ def registrar_usuario():
         }
         response = requests.post(API_URL + "usuarios/registrar", json = post_data)
 
-        if(response.status_code == 200):
+        if(response.status_code == 200 or response.status_code == 201):
             flash('La cuenta ha sido registrada exitosamente', 'success')
             return redirect(url_for('usuarios.usuarios_lista'))
         else:

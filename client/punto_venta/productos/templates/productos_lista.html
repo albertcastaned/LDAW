@@ -2,6 +2,9 @@
 {% block content %}
 <div class="container border p-4 mb-6 mt-6">
     <h2>{{titulo}}</h2>
+    {% if not productos %}
+    <h6 class="error-empty">No hay productos registrados</h6>
+    {% else %}
     <table class="table">
         <thead>
             <tr>
@@ -30,5 +33,6 @@
         </tbody>
 
     </table>
+    {% endif %}
 </div>
 {% endblock content %}

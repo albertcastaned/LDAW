@@ -22,7 +22,7 @@ def registrar_producto():
         }
         response = requests.post(API_URL + "productos/registrar", json = post_data)
 
-        if(response.status_code == 200):
+        if(response.status_code == 200 or response.status_code == 201):
             flash('El producto a sido registrado exitosamente', 'success')
             return redirect(url_for('productos.productos_lista'))
         else:
