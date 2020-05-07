@@ -10,7 +10,7 @@ def test_get_view(client):
     resp = client.get("/productos/registrar")
     resp.status_code == 200
 
-def test_registrarUusario_vacios(client):
+def test_registrarProducto_vacios(client):
     data_nombre_producto = ""
     data_descripcion = ""
     data_marca = ""
@@ -31,7 +31,29 @@ def test_registrarUusario_vacios(client):
 
     assert False == form.validate()
 
-def test_registrarUusario_valores_cero(client):
+def test_registrarProducto_campos_ilegales(client):
+    data_nombre_producto = "@"
+    data_descripcion = "/"
+    data_marca = "><"
+    data_precioVentaBase = 15
+    data_precioCompra = 15
+    data_proveedor = '<script>alert("hello")</script>'
+
+    data={
+    'nombre_producto': data_nombre_producto,
+    'descripcion_producto': data_descripcion,
+    'marca_producto': data_marca,
+    'precio_venta': data_precioVentaBase,
+    'precio_compra': data_precioCompra,
+    'proveedor': data_proveedor,
+    }
+
+    form = RegistarProductoForm(data=data)
+
+    assert False == form.validate()
+
+
+def test_registrarProducto_valores_cero(client):
     data_nombre_producto = "prueba"
     data_descripcion = "prueba"
     data_marca = "prueba"
@@ -52,7 +74,7 @@ def test_registrarUusario_valores_cero(client):
 
     assert False == form.validate()
 
-def test_registrarUusario_valores_negativo(client):
+def test_registrarProducto_valores_negativo(client):
     data_nombre_producto = "prueba"
     data_descripcion = "prueba"
     data_marca = "prueba"
@@ -73,7 +95,7 @@ def test_registrarUusario_valores_negativo(client):
     assert False == form.validate()
 
 
-def test_registrarUusario_exitoso(client):
+def test_registrarProducto_exitoso(client):
     data_nombre_producto = "prueba"
     data_descripcion = "prueba"
     data_marca = "prueba"
