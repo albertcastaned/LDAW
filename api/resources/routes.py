@@ -8,3 +8,4 @@ def initialize_routes(api):
     api.add_resource(Usuario_detalle, '/usuario/<int:usuario_id>')
     api.add_resource(Login, '/login')
     api.add_resource(Inventario_view, '/inventario/<int:page>')
+    api.add_resource(Compra_view, '/compras/registrar')

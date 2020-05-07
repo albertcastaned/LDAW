@@ -10,5 +10,4 @@ inventario = Blueprint('inventario', __name__, template_folder='templates')
 def inventario_lista():
     page = request.args.get('pagina', 1, type=int)
     response = requests.get(API_URL + "inventario/" + str(page))
-    print(response.json())
     return render_template('inventario.html', inventario=response.json(), titulo="Inventario")

@@ -29,3 +29,7 @@ nav a:hover{
   margin-top: 25px;
   margin-bottom: 50px;
 }
+
+.error-empty{
+  color: red;
+}
