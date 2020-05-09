@@ -36,6 +36,5 @@ def registrar_producto():
 @productos.route("/productos/", methods=['GET'])
 @login_required
 def productos_lista():
-    page = request.args.get('pagina', 1, type=int)
-    response = requests.get(API_URL + "productos/" + str(page))
+    response = requests.get(API_URL + "productos/")
     return render_template('productos_lista.html', productos=response.json(), titulo="Lista de Productos")

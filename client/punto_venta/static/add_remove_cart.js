@@ -19,9 +19,7 @@ $(document).ready(function(){
 
         }
     }
-
-    $(".add-cart-compra").on("click", function() {
-
+    $("#inventario-table-body").on("click", '.add-cart-compra', function() {
 
         row = $(this).closest("tr");
         tds = row.find("td");

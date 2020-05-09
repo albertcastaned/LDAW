@@ -34,8 +34,7 @@ def registrar_usuario():
 
 @usuarios.route("/usuarios/", methods=['GET'])
 def usuarios_lista():
-    page = request.args.get('page', 1, type=int)
-    response = requests.get(API_URL + "usuarios/" + str(page))
+    response = requests.get(API_URL + "usuarios/")
     return render_template('usuarios_lista.html', usuarios=response.json(), titulo="Lista de Usuarios")
 
 @usuarios.route("/usuarios/login", methods=['GET','POST'])

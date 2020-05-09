@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container border p-4 mb-6 mt-6">
+    
     <h2>{{titulo}}</h2>
 
     {% if not inventario %}
         <h6 class="error-empty">No hay productos registrados</h6>
     {% else %}
-    <div class="row">
-        <input type="text" class="form-control form-control-lg" id="inventario-input" placeholder="Buscar por nombre de producto...">
-    </div>
-    <div class="row">
+
 
     <table class="table" >
         <thead>
@@ -34,7 +32,6 @@
         </tbody>
 
     </table>
-    </div>
     {% endif %}
 
 </div>
