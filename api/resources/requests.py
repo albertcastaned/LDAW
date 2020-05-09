@@ -9,8 +9,8 @@ from sqlalchemy.exc import IntegrityError
 
 #Requests
 class Productos_lista(Resource):
-    def get(self, page):
-        productos = Producto.query.paginate(page=page, per_page=10).items
+    def get(self):
+        productos = Producto.query.all()
         return productos_schema.dump(productos)
 
 class Producto_registrar(Resource):
@@ -42,8 +42,8 @@ class Producto_registrar(Resource):
         return 'OK', 201
 
 class Usuarios_lista(Resource):
-    def get(self, page):
-        usuarios = Usuario.query.paginate(page=page, per_page=10).items
+    def get(self):
+        usuarios = Usuario.query.all()
         return usuarios_schema.dump(usuarios)
 
 class Usuarios_registrar(Resource):
@@ -91,10 +91,10 @@ class Login(Resource):
         return {"message":"Invalid credentials"}, 401
 
 class Inventario_view(Resource):
-    def get(self, page):
-        inventario = Inventario.query.paginate(page=page, per_page=10).items
+    def get(self):
+        inventario = Inventario.query.all()
         return inventario_schema.dump(inventario)
-    
+
 class Compra_view(Resource):
     def post(self):
         compras = request.json

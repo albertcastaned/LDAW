@@ -27,6 +27,5 @@ def registrar_compra():
             flash('Ocurrio un error al registrar la compra, vuelva a intentar', 'danger')
             return render_template('registrar_compra.html', inventario=response.json(), titulo="Registrar Compra")
     else:
-        page = request.args.get('pagina', 1, type=int)
-        response = requests.get(API_URL + "inventario/" + str(page))
+        response = requests.get(API_URL + "inventario/")
         return render_template('registrar_compra.html', inventario=response.json(), titulo="Registrar Compra")
