@@ -98,6 +98,7 @@ class Inventario_view(Resource):
 class Compra_view(Resource):
     def post(self):
         compras = request.json
+        print(compras)
         for compra in compras:
             nueva_compra = Compra(
                 id_usuario = compra['id_usuario'],
@@ -115,3 +116,32 @@ class Compra_view(Resource):
         db.session.commit()
 
         return 'OK', 201
+
+
+class Venta_view(Resource):
+    def post(self):
+        print("Hola")
+        ventas = request.json
+        print("Hola3")
+        print(ventas)
+        for venta in ventas:
+            nueva_venta = Venta(
+                id_usuario = venta['id_usuario'],
+                id_producto = venta['id_producto'],
+                precioVenta = venta['precioVenta'],
+                cantidad = venta['cantidad'],
+                total = float(venta['precioVenta']) * float(venta['cantidad']),
+                fecha = date.today()
+            )
+            print("Hola2")
+            db.session.add(nueva_venta)
+
+            registro_inventario = Inventario.query.filter_by(id_producto=nueva_venta.id_producto).first()
+            registro_inventario.cantidad = float(registro_inventario.cantidad) - float(nueva_venta.cantidad)
+            print(registro_inventario)
+            print(nueva_venta)
+        db.session.commit()
+
+        return 'OK', 201
+
+

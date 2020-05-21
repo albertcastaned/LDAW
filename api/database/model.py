@@ -78,7 +78,7 @@ compras_schema = CompraSchema(many=True)
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
     id = db.Column(db.Integer, primary_key=True)
-    ticket = db.Column(db.Integer, nullable=False)
+
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('Producto.id'))
     precioVenta = db.Column(db.Float, nullable=False)
@@ -88,6 +88,13 @@ class Venta(db.Model, Base):
 
     def __repr__(self):
         return '<Venta: {}>'.format(self.id)
+
+class VentaSchema(marsh.Schema):
+    class Meta:
+        fields = ("id", "id_usuario", "id_producto", "precioVenta", "cantidad", "total", "fecha")
+
+venta_schema = VentaSchema()
+ventas_schema = VentaSchema(many=True)
 
 
 class Inventario(db.Model, Base):
