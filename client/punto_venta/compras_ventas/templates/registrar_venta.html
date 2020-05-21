@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container border p-4 mb-6 mt-6">
+    <h2>{{titulo}}</h2>
+    {% if not inventario %}
+        <h6 class="error-empty">No hay productos registrados</h6>
+    {% else %}
+ 
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio de Venta</th>
+                <th scope="col">Precio de Compra</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        <tbody id="inventario-venta-table-body">
+            {% for producto in inventario %}
+                <tr>
+                    <td>{{producto['producto']['id']}}</td>
+                    <td>{{producto['producto']['nombre_producto']}}</td>
+                    <td>{{producto['producto']['precioVentaBase']}}</td>
+                    <td>{{producto['producto']['precioCompra']}}</td>
+                    <td>{{producto['cantidad']}}</td>
+                    <td><button type="button" class="btn btn-primary btn-sm add-cart-venta">Agregar</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    {% endif %}
+    </div>
+    <div class="container">
+        <form method="POST" action="">
+            <fieldset class="form-group" id="cart">
+                <div class="row">
+                    <legend class="border-bottom mb-12"><h2>Carrito</h2></legend>
+                </div>
+            </fieldset>
+            <div class="form-group text-center">
+                <h5>Total = </h5>
+                <h5 id='cart-total'>0.00</h5>
+            </div>
+            <div class=" form-group text-center">
+                <input disabled class="btn btn-success" id="submit" name="submit" type="submit" value="Registrar Venta">
+            </div>
+
+        </form>
+
+</div>
+
+
+{% endblock content %}

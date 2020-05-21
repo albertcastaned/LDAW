@@ -29,3 +29,32 @@ def registrar_compra():
     else:
         response = requests.get(API_URL + "inventario/")
         return render_template('registrar_compra.html', inventario=response.json(), titulo="Registrar Compra")
+
+
+
+@compras_ventas.route("/ventas/registrar", methods=['GET', 'POST'])
+@login_required
+def registrar_venta():
+    if request.method == 'POST':
+        id_usuario = session['user_id']
+        id_productos = request.form.getlist('id[]')
+        precios = request.form.getlist('precioVenta[]')
+        cantidades = request.form.getlist('cantidad[]')
+
+        json_data = [{"id_usuario":id_usuario, "id_producto":producto_id, "precioVenta":precio,
+        "cantidad":cantidad} for producto_id, precio, cantidad in zip(id_productos, precios, cantidades)
+        ]
+
+        response = requests.post(API_URL + "ventas/registrar", json = json_data)
+        if response.status_code == 201:
+            flash('La compra ha sido registrada exitosamente', 'success')
+            return redirect(url_for('inventario.inventario_lista'))
+        else:
+            page = request.args.get('pagina', 1, type=int)
+            response = requests.get(API_URL + "inventario/" + str(page))
+            flash('Ocurrio un error al registrar la venta, vuelva a intentar', 'danger')
+            return render_template('registrar_venta.html', inventario=response.json(), titulo="Registrar Venta")
+    else:
+        response = requests.get(API_URL + "inventario/")
+        return render_template('registrar_venta.html', inventario=response.json(), titulo="Registrar Venta")
+
