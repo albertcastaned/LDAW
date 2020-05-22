@@ -31,6 +31,11 @@ def registrar_compra():
         return render_template('registrar_compra.html', inventario=response.json(), titulo="Registrar Compra")
 
 
+@compras_ventas.route("/compras/", methods=['GET'])
+@login_required
+def compras_lista():
+    response = requests.get(API_URL + "compras/")
+    return render_template('compras_lista.html', compras=response.json(), titulo="Lista de Compras")
 
 @compras_ventas.route("/ventas/registrar", methods=['GET', 'POST'])
 @login_required
@@ -58,3 +63,8 @@ def registrar_venta():
         response = requests.get(API_URL + "inventario/")
         return render_template('registrar_venta.html', inventario=response.json(), titulo="Registrar Venta")
 
+@compras_ventas.route("/ventas/", methods=['GET'])
+@login_required
+def ventas_lista():
+    response = requests.get(API_URL + "ventas/")
+    return render_template('ventas_lista.html', ventas=response.json(), titulo="Lista de Ventas")

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container border p-4 mb-6 mt-6">
+    <h2>{{titulo}}</h2>
+    {% if not compras %}
+    <br>
+    <h6 class="error-empty">No hay compras registradas</h6>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Productos</th>
+                <th scope="col">Precio de Compra</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+                <th scope="col">Fecha</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for compra in compras %}
+                <tr>
+                    <td>{{compra['id']}}</td>
+                    <td>{{compra['usuario']}}</td>
+                    <td>{{compra['nombre_producto']}}</td>
+                    <td>{{compra['precioCompra']}}</td>
+                    <td>{{compra['cantidad']}}</td>
+                    <td>{{compra['total']}}</td>
+                    <td>{{compra['fecha']}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    {% endif %}
+</div>
+{% endblock content %}
