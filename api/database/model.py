@@ -63,13 +63,19 @@ class Compra(db.Model, Base):
     cantidad = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
     fecha = db.Column(db.DateTime, nullable=False)
+    producto = relationship(Producto, backref=backref('compras', uselist=True))
+    usuario = relationship(Usuario, backref=backref('compras', uselist=True))
 
     def __repr__(self):
         return '<Compra: {}>'.format(self.id)
 
 class CompraSchema(marsh.Schema):
-    class Meta:
-        fields = ("id", "id_usuario", "id_producto", "precioCompra", "cantidad", "total","fecha")
+    precioCompra = fields.Float()
+    cantidad = fields.Float()
+    total = fields.Float()
+    fecha = fields.DateTime()
+    producto = fields.Nested(ProductoSchema)
+    usuario = fields.Nested(UsuarioSchema)
 
 compra_schema = CompraSchema()
 compras_schema = CompraSchema(many=True)
@@ -78,20 +84,25 @@ compras_schema = CompraSchema(many=True)
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
     id = db.Column(db.Integer, primary_key=True)
-
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('Producto.id'))
     precioVenta = db.Column(db.Float, nullable=False)
     cantidad = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
     fecha = db.Column(db.DateTime, nullable=False)
+    producto = relationship(Producto, backref=backref('ventas', uselist=True))
+    usuario = relationship(Usuario, backref=backref('ventas', uselist=True))
 
     def __repr__(self):
         return '<Venta: {}>'.format(self.id)
 
 class VentaSchema(marsh.Schema):
-    class Meta:
-        fields = ("id", "id_usuario", "id_producto", "precioVenta", "cantidad", "total", "fecha")
+    precioVenta = fields.Float()
+    cantidad = fields.Float()
+    total = fields.Float()
+    fecha = fields.DateTime()
+    producto = fields.Nested(ProductoSchema)
+    usuario = fields.Nested(UsuarioSchema)
 
 venta_schema = VentaSchema()
 ventas_schema = VentaSchema(many=True)

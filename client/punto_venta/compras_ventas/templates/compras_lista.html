@@ -9,7 +9,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Id</th>
                 <th scope="col">Usuario</th>
                 <th scope="col">Productos</th>
                 <th scope="col">Precio de Compra</th>
@@ -22,9 +21,8 @@
         <tbody>
             {% for compra in compras %}
                 <tr>
-                    <td>{{compra['id']}}</td>
-                    <td>{{compra['id_usuario']}}</td>
-                    <td>{{compra['id_producto']}}</td>
+                    <td>{{compra['usuario']['nombre_usuario']}}</td>
+                    <td>{{compra['producto']['nombre_producto']}}</td>
                     <td>{{compra['precioCompra']}}</td>
                     <td>{{compra['cantidad']}}</td>
                     <td>{{compra['total']}}</td>

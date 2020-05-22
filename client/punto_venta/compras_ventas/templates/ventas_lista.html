@@ -9,9 +9,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Id Venta</th>
                 <th scope="col">Usuario</th>
-                <th scope="col">Productos</th>
+                <th scope="col">Producto</th>
                 <th scope="col">Precio de Venta</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Total</th>
@@ -22,9 +21,8 @@
         <tbody>
             {% for venta in ventas %}
                 <tr>
-                    <td>{{venta['id']}}</td>
-                    <td>{{venta['id_usuario']}}</td>
-                    <td>{{venta['id_producto']}}</td>
+                    <td>{{venta['usuario']['nombre_usuario']}}</td>
+                    <td>{{venta['producto']['nombre_producto']}}</td>
                     <td>{{venta['precioVenta']}}</td>
                     <td>{{venta['cantidad']}}</td>
                     <td>{{venta['total']}}</td>

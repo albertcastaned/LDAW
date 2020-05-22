@@ -16,7 +16,6 @@ def registrar_compra():
         json_data = [{"id_usuario":id_usuario, "id_producto":producto_id, "precioCompra":precio,
         "cantidad":cantidad} for producto_id, precio, cantidad in zip(id_productos, precios, cantidades)
         ]
-
         response = requests.post(API_URL + "compras/registrar", json = json_data)
         if response.status_code == 201:
             flash('La compra se ha a sido registrado exitosamente', 'success')
@@ -67,4 +66,5 @@ def registrar_venta():
 @login_required
 def ventas_lista():
     response = requests.get(API_URL + "ventas/")
+    print(response.json())
     return render_template('ventas_lista.html', ventas=response.json(), titulo="Lista de Ventas")

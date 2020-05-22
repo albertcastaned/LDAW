@@ -124,10 +124,7 @@ class Compras_lista(Resource):
 
 class Venta_view(Resource):
     def post(self):
-        print("Hola")
         ventas = request.json
-        print("Hola3")
-        print(ventas)
         for venta in ventas:
             nueva_venta = Venta(
                 id_usuario = venta['id_usuario'],
@@ -137,7 +134,6 @@ class Venta_view(Resource):
                 total = float(venta['precioVenta']) * float(venta['cantidad']),
                 fecha = date.today()
             )
-            print("Hola2")
             db.session.add(nueva_venta)
 
             registro_inventario = Inventario.query.filter_by(id_producto=nueva_venta.id_producto).first()
