@@ -75,14 +75,14 @@ class Login(Resource):
 
         username = request.json['username']
         password = request.json['password']
- 
+
         if not username:
             return jsonify({"msg": "Missing username parameter"}), 400
         if not password:
             return jsonify({"msg": "Missing password parameter"}), 400
 
         user = Usuario.query.filter_by(nombre_usuario=username).first()
-        
+
         if user and bcrypt.check_password_hash(user.contrasenia, password):
             return {
                 'message': 'Successful logged in','username':str(username), 'id':int(user.id)
@@ -117,13 +117,14 @@ class Compra_view(Resource):
 
         return 'OK', 201
 
+class Compras_lista(Resource):
+    def get(self):
+        compras = Compra.query.all()
+        return compras_schema.dump(compras)
 
 class Venta_view(Resource):
     def post(self):
-        print("Hola")
         ventas = request.json
-        print("Hola3")
-        print(ventas)
         for venta in ventas:
             nueva_venta = Venta(
                 id_usuario = venta['id_usuario'],
@@ -133,7 +134,6 @@ class Venta_view(Resource):
                 total = float(venta['precioVenta']) * float(venta['cantidad']),
                 fecha = date.today()
             )
-            print("Hola2")
             db.session.add(nueva_venta)
 
             registro_inventario = Inventario.query.filter_by(id_producto=nueva_venta.id_producto).first()
@@ -144,4 +144,7 @@ class Venta_view(Resource):
 
         return 'OK', 201
 
-
+class Ventas_lista(Resource):
+    def get(self):
+        ventas = Venta.query.all()
+        return ventas_schema.dump(ventas)
