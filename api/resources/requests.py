@@ -120,7 +120,7 @@ class Compra_view(Resource):
 class Compras_lista(Resource):
     def get(self):
         compras = Compra.query.all()
-        return compra_schema.dump(compras)
+        return compras_schema.dump(compras)
 
 class Venta_view(Resource):
     def post(self):
@@ -151,4 +151,4 @@ class Venta_view(Resource):
 class Ventas_lista(Resource):
     def get(self):
         ventas = Venta.query.all()
-        return venta_schema.dump(ventas)
+        return ventas_schema.dump(ventas)

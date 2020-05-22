@@ -21,7 +21,7 @@ class Usuario(db.Model , Base):
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
-    
+
 class UsuarioSchema(marsh.Schema):
     class Meta:
         fields = ("id", "nombre_completo", "nombre_usuario", "email", "activo")
