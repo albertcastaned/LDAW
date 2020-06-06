@@ -28,7 +28,7 @@ class Usuario(db.Model , Base):
     venta_productos = db.relationship('Producto', secondary='Ventas')
 
     def __repr__(self):
-        return '<Usuario: {}>'.format(self.nombre_usuario)
+        return '<Usuario: {}, Roles: {}>'.format(self.nombre_usuario, self.roles)
 
 class Rol(db.Model):
     __tablename__ = 'Roles'
@@ -38,9 +38,20 @@ class Rol(db.Model):
     def __repr__(self):
         return '<Rol: {}>'.format(self.nombre)
 
-class UsuarioSchema(marsh.Schema):
+class RolSchema(marsh.Schema):
     class Meta:
-        fields = ("id", "nombre_completo", "nombre_usuario", "email", "activo")
+        fields = ("id", "nombre")
+
+rol_schema = RolSchema()
+roles_schema = RolSchema(many=True)
+
+class UsuarioSchema(marsh.Schema):
+    id = fields.Integer()
+    nombre_completo = fields.String()
+    nombre_usuario = fields.String()
+    email = fields.String()
+    activo = fields.Boolean()
+    roles = fields.Nested(roles_schema)
 
 usuario_schema = UsuarioSchema()
 usuarios_schema = UsuarioSchema(many=True)
