@@ -6,6 +6,12 @@ from marshmallow import fields
 #Modelo
 Base = declarative_base()
 
+roles_usuarios = db.Table(
+    'roles_usuarios',
+    db.Column('usuario_id', db.Integer(), db.ForeignKey('Usuarios.id')),
+    db.Column('rol_id', db.Integer(), db.ForeignKey('Roles.id'))
+)
+
 class Usuario(db.Model , Base):
     __tablename__ = 'Usuarios'
     id = db.Column(db.Integer, primary_key=True)
@@ -15,12 +21,22 @@ class Usuario(db.Model , Base):
     contrasenia = db.Column(db.String(128), nullable=False)
     activo = db.Column(db.Boolean, default=True)
 
+    # Agregar con usuario.roles.append(rol)
+    roles = db.relationship('Rol', secondary=roles_usuarios)
+
     compra_productos = db.relationship('Producto', secondary='Compras')
     venta_productos = db.relationship('Producto', secondary='Ventas')
 
     def __repr__(self):
         return '<Usuario: {}>'.format(self.nombre_usuario)
 
+class Rol(db.Model):
+    __tablename__ = 'Roles'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False, unique=True)
+    
+    def __repr__(self):
+        return '<Rol: {}>'.format(self.nombre)
 
 class UsuarioSchema(marsh.Schema):
     class Meta:
