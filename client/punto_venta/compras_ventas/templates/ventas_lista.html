@@ -15,6 +15,7 @@
                 <th scope="col">Cantidad</th>
                 <th scope="col">Total</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">Ticket</th>
             </tr>
         </thead>
 
@@ -27,6 +28,7 @@
                     <td>{{venta['cantidad']}}</td>
                     <td>{{venta['total']}}</td>
                     <td>{{venta['fecha']}}</td>
+                    <td>{{venta['id_ticket']}}</td>
                 </tr>
             {% endfor %}
         </tbody>

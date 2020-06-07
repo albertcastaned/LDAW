@@ -100,13 +100,14 @@ class Compra(db.Model, Base):
     usuario = relationship(Usuario, backref=backref('compras', uselist=True))
 
     def __repr__(self):
-        return '<Compra: {}>'.format(self.id)
+        return '<Compra: {}, Ticket: {}>'.format(self.id, self.id_ticket)
 
 class CompraSchema(marsh.Schema):
     precioCompra = fields.Float()
     cantidad = fields.Float()
     total = fields.Float()
     fecha = fields.DateTime()
+    id_ticket = fields.Integer()
     producto = fields.Nested(ProductoSchema)
     usuario = fields.Nested(UsuarioSchema)
 
@@ -132,13 +133,14 @@ class Venta(db.Model, Base):
     usuario = relationship(Usuario, backref=backref('ventas', uselist=True))
 
     def __repr__(self):
-        return '<Venta: {}>'.format(self.id)
+        return '<Venta: {}, Ticket: {}>'.format(self.id, self.id_ticket)
 
 class VentaSchema(marsh.Schema):
     precioVenta = fields.Float()
     cantidad = fields.Float()
     total = fields.Float()
     fecha = fields.DateTime()
+    id_ticket = fields.Integer()
     producto = fields.Nested(ProductoSchema)
     usuario = fields.Nested(UsuarioSchema)
 

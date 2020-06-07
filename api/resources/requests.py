@@ -106,9 +106,10 @@ class Inventario_view(Resource):
 class Compra_view(Resource):
     def post(self):
         compras = request.json
-        print(compras)
+        ticket = TicketCompra()
         for compra in compras:
             nueva_compra = Compra(
+                ticket = ticket,
                 id_usuario = compra['id_usuario'],
                 id_producto = compra['id_producto'],
                 precioCompra = compra['precioCompra'],
@@ -133,8 +134,10 @@ class Compras_lista(Resource):
 class Venta_view(Resource):
     def post(self):
         ventas = request.json
+        ticket = TicketVenta()
         for venta in ventas:
             nueva_venta = Venta(
+                ticket = ticket,
                 id_usuario = venta['id_usuario'],
                 id_producto = venta['id_producto'],
                 precioVenta = venta['precioVenta'],
