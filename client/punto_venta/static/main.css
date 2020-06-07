@@ -33,3 +33,7 @@ nav a:hover{
 .error-empty{
   color: red;
 }
+
+ul {
+  list-style-type: none;
+ }

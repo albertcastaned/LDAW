@@ -46,6 +46,11 @@ class Usuarios_lista(Resource):
         usuarios = Usuario.query.all()
         return usuarios_schema.dump(usuarios)
 
+class Roles_lista(Resource):
+    def get(self):
+        roles = Rol.query.all()
+        return roles_schema.dump(roles)
+
 class Usuarios_registrar(Resource):
     def post(self):
         nuevo_usuario = Usuario(
@@ -54,8 +59,13 @@ class Usuarios_registrar(Resource):
             email = request.json['email'],
             contrasenia = bcrypt.generate_password_hash(request.json['contrasenia']),
         )
-
+        print(request.json)
+        for rol in request.json['roles']:
+            filteredRol = Rol.query.filter_by(id=int(rol)).first()
+            nuevo_usuario.roles.append(filteredRol)
         db.session.add(nuevo_usuario)
+
+
         try:
             db.session.commit()
         except IntegrityError:
@@ -84,9 +94,7 @@ class Login(Resource):
         user = Usuario.query.filter_by(nombre_usuario=username).first()
 
         if user and bcrypt.check_password_hash(user.contrasenia, password):
-            return {
-                'message': 'Successful logged in','username':str(username), 'id':int(user.id)
-            }, 200
+            return usuario_schema.dump(user), 200
 
         return {"message":"Invalid credentials"}, 401
 
