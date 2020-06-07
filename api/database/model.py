@@ -81,15 +81,21 @@ producto_schema = ProductoSchema()
 productos_schema = ProductoSchema(many=True)
 
 
+class TicketCompra(db.Model):
+    __tablename__ = 'TicketCompras'
+    id = db.Column(db.Integer, primary_key=True)
+
 class Compra(db.Model, Base):
     __tablename__ = 'Compras'
     id = db.Column(db.Integer, primary_key=True)
+    id_ticket = db.Column(db.Integer, db.ForeignKey('TicketCompras.id'))
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('Producto.id'))
     precioCompra = db.Column(db.Float, nullable=False)
     cantidad = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
     fecha = db.Column(db.DateTime, nullable=False)
+    ticket = relationship(TicketCompra, backref=backref('compras', uselist=True))
     producto = relationship(Producto, backref=backref('compras', uselist=True))
     usuario = relationship(Usuario, backref=backref('compras', uselist=True))
 
@@ -107,16 +113,21 @@ class CompraSchema(marsh.Schema):
 compra_schema = CompraSchema()
 compras_schema = CompraSchema(many=True)
 
+class TicketVenta(db.Model):
+    __tablename__ = 'TicketVentas'
+    id = db.Column(db.Integer, primary_key=True)
 
 class Venta(db.Model, Base):
     __tablename__ = 'Ventas'
     id = db.Column(db.Integer, primary_key=True)
+    id_ticket = db.Column(db.Integer, db.ForeignKey('TicketVentas.id'))
     id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'))
     id_producto = db.Column(db.Integer, db.ForeignKey('Producto.id'))
     precioVenta = db.Column(db.Float, nullable=False)
     cantidad = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
     fecha = db.Column(db.DateTime, nullable=False)
+    ticket = relationship(TicketVenta, backref=backref('ventas', uselist=True))
     producto = relationship(Producto, backref=backref('ventas', uselist=True))
     usuario = relationship(Usuario, backref=backref('ventas', uselist=True))
 
