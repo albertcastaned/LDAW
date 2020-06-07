@@ -22,7 +22,7 @@ class RegistarUsuarioForm(FlaskForm):
     email = StringField('Correo Electronico', validators=[DataRequired(message="Llena los datos"), Email(message="Correo electronico invalido")])
     nombre_completo = StringField('Nombre Completo', validators=[DataRequired(message="Llena los datos"), Length(min=1, max=120)])
     roles = MultiCheckboxField("Roles", coerce=int,validators=[DataRequired(message="Selecciona por lo menos un rol")])
-
+    
     submit = SubmitField('Registrar')
 
 class LoginForm(FlaskForm):
