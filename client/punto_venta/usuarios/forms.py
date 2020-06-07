@@ -1,7 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectMultipleField, widgets
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
+class MultiCheckboxField(SelectMultipleField):
+    """
+    A multiple-select, except displays a list of checkboxes.
+
+    Iterating the field will produce subfields, allowing custom rendering of
+    the enclosed checkbox fields.
+    """
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 class RegistarUsuarioForm(FlaskForm):
     nombre_usuario = StringField('Nombre de Usuario', validators=[DataRequired(message="Llena los datos"), 
@@ -12,6 +21,7 @@ class RegistarUsuarioForm(FlaskForm):
     
     email = StringField('Correo Electronico', validators=[DataRequired(message="Llena los datos"), Email(message="Correo electronico invalido")])
     nombre_completo = StringField('Nombre Completo', validators=[DataRequired(message="Llena los datos"), Length(min=1, max=120)])
+    roles = MultiCheckboxField("Roles", coerce=int,validators=[DataRequired(message="Selecciona por lo menos un rol")])
     
     submit = SubmitField('Registrar')
 

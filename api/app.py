@@ -1,5 +1,5 @@
 from flask import Flask
-import os, json
+import os, json, click
 from flask_restful import Api
 
 from database.db import initialize_db
@@ -25,3 +25,8 @@ initialize_db(app)
 initialize_routes(api)
 if __name__ == '__main__':
     app.run(debug=True,host='127.0.0.1', port=6000)
+
+@app.cli.command()
+def iniciar_roles():
+    print("test")
+    

@@ -9,6 +9,7 @@
                 <th scope="col">Nombre Completo</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Activo</th>
+                <th scope="col">Roles</th>
             </tr>
         </thead>
 
@@ -19,6 +20,11 @@
                     <td>{{usuario['nombre_completo']}}</td>
                     <td>{{usuario['email']}}</td>
                     <td>{{usuario['activo']}}</td>
+                    <td>
+                        {% for rol in usuario['roles'] %}
+                            {{rol['nombre']}}, 
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -12,3 +12,4 @@ def initialize_routes(api):
     api.add_resource(Compras_lista, '/compras/')
     api.add_resource(Venta_view, '/ventas/registrar')
     api.add_resource(Ventas_lista, '/ventas/')
+    api.add_resource(Roles_lista, '/roles/')
