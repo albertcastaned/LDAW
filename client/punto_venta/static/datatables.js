@@ -1,6 +1,10 @@
 $(document).ready(function() {
     $('.table').DataTable({
         autoWidth: false,
+        dom: 'Bfrtip',
+        buttons: [
+            'pdf'
+        ],
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
             "search": "Buscar",
