@@ -5,7 +5,14 @@ $(document).ready(function() {
         autoWidth: false,
         dom: 'Bfrtip',
         buttons: [
-            'pdf'
+            {
+                extend: 'pdf',
+                text: 'Descargar PDF'
+            },
+            {
+                extend: 'print',
+                text: 'Imprimir'
+            }
         ],
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
