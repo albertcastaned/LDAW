@@ -1,4 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{titulo}}</h1>
+
+<div class="bar">
+    <h1 class="text-dark">Agroservicios "La Guadalupana"</h1>
+</div>
+<div class="container">
+    <div class="holi">
+        <div class="card-deck">
+            <div class="card">
+                <img src="../static/Images/deposito.png" alt="Card image cap">
+                <a class="btn btn-secondary btn-md" data-toggle="collapse" href="#ventas" role="button" aria-expanded="false" aria-controls="ventas">VENTAS</a>
+                <div class="card-body text-center">
+                    <div class="collapse multi-collapse" id="ventas">
+                        <a href="{{ url_for('compras_ventas.registrar_venta') }}" class="stretched-link text-success" >Registrar<i class="fas fa-edit ml-2"></i></a><br>
+                        <a href="{{ url_for('compras_ventas.ventas_lista') }}" class="stretched-link text-success" >Consultar<i class="fas fa-book-open ml-2"></i></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../static/Images/venta.png" alt="Card image cap">
+                <a class="btn btn-secondary btn-md" data-toggle="collapse" href="#compras" role="button" aria-expanded="false" aria-controls="compras">COMPRAS</a>
+                <div class="card-body text-center">
+                    <div class="collapse multi-collapse" id="compras">
+                        <a href="{{ url_for('compras_ventas.registrar_compra') }}" class="stretched-link text-success" >Registrar<i class="fas fa-plus ml-2"></i></a><br>
+                        <a href="{{ url_for('compras_ventas.compras_lista') }}" class="stretched-link text-success" >Consultar<i class="fas fa-book-open ml-2"></i></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../static/Images/factura.png" alt="Card image cap">
+                <a class="btn btn-secondary btn-md" data-toggle="collapse" href="#inventario" role="button" aria-expanded="false" aria-controls="inventario">INVENTARIO</a>
+                <div class="card-body text-center">
+                    <div class="collapse multi-collapse" id="inventario">
+                        <a href="{{ url_for('inventario.inventario_lista') }}" class="stretched-link text-success" >Consultar<i class="fas fa-book-open ml-2"></i></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../static/Images/producto.png" alt="Card image cap">
+                <a class="btn btn-secondary btn-md" data-toggle="collapse" href="#productos" role="button" aria-expanded="false" aria-controls="productos">PRODUCTOS</a>
+                <div class="card-body text-center">
+                    <div class="collapse multi-collapse" id="productos">
+                        <a href="{{ url_for('productos.registrar_producto') }}" class="stretched-link text-success" >Registrar<i class="fas fa-plus ml-2"></i></a><br>
+                        <a href="{{ url_for('productos.productos_lista') }}" class="stretched-link text-success" >Consultar<i class="fas fa-book-open ml-2"></i></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../static/Images/usuario.png" alt="Card image cap">
+                <a class="btn btn-secondary btn-md" data-toggle="collapse" href="#usuarios" role="button" aria-expanded="false" aria-controls="usuarios">USUARIOS</a>
+                <div class="card-body text-center">
+                    <div class="collapse multi-collapse" id="usuarios">
+                        <a href="{{ url_for('usuarios.registrar_usuario') }}" class="stretched-link text-success" >Registrar<i class="fas fa-plus ml-2"></i></a><br>
+                        <a href="{{ url_for('usuarios.usuarios_lista') }}" class="stretched-link text-success" >Consultar<i class="fas fa-book-open ml-2"></i></a>  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 {% endblock content %}
