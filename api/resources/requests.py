@@ -6,7 +6,8 @@ from flask_restful import Resource
 import os, json
 from datetime import date
 from sqlalchemy.exc import IntegrityError
-
+from sqlalchemy import extract
+from sqlalchemy.sql import func
 #Requests
 class Productos_lista(Resource):
     def get(self):
@@ -102,6 +103,15 @@ class Inventario_view(Resource):
     def get(self):
         inventario = Inventario.query.all()
         return inventario_schema.dump(inventario)
+
+class Reporte_view(Resource):
+    def get(self):
+        ventasQuery = db.session.query(extract('month',Venta.fecha), 
+            func.round(func.sum(Venta.total).label('Total'),2)).filter(extract('year', Venta.fecha) == request.args['año']).group_by(extract('month',Venta.fecha)).order_by(extract('month',Venta.fecha)).all()
+        comprasQuery = db.session.query(extract('month',Compra.fecha), 
+            func.round(func.sum(Compra.total).label('Total'),2)).filter(extract('year', Compra.fecha) == request.args['año']).group_by(extract('month',Compra.fecha)).order_by(extract('month',Compra.fecha)).all()
+
+        return jsonify(ventas = ventasQuery, compras = comprasQuery)
 
 class Compra_view(Resource):
     def post(self):

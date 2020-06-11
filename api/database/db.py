@@ -15,7 +15,7 @@ marsh = Marshmallow()
 bcrypt = Bcrypt()
 def initialize_db(app):
     db.init_app(app)
-    Migrate(app, db,compare_type=True)
+    Migrate(app, db)
     marsh.init_app(app)
     bcrypt.init_app(app)
 
