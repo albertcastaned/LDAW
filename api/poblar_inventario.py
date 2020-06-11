@@ -12,3 +12,5 @@ for i in range(1,100):
 	inventario = Inventario(producto=producto, cantidad=0)
 	db.session.add(inventario)
 	db.session.commit()
+
+print("\n\nSe creo el inventario de muestra exitosamente :)\n\n")

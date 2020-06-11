@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container border p-4 mb-6 mt-6">
+    <h2>{{titulo}}</h2>
+    <div class="container mb-6 mt-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Año</th>
+                    <th scope="col">Ver</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                    {% for anio in anios %}
+                    <tr>
+                        <td>{{anio}}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ url_for('compras_ventas.reporte', año=anio ) }}">Ver</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+{% endblock content %}

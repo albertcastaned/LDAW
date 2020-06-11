@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $('.table').DataTable({
+        order: [],
+        pageLength: 15,
         autoWidth: false,
         dom: 'Bfrtip',
         buttons: [

@@ -3,6 +3,7 @@ import requests, json
 from punto_venta import API_URL
 from punto_venta.utils import login_required
 compras_ventas = Blueprint('compras_ventas', __name__, template_folder='templates')
+import datetime
 
 @compras_ventas.route("/compras/registrar", methods=['GET', 'POST'])
 @login_required
@@ -68,3 +69,28 @@ def ventas_lista():
     response = requests.get(API_URL + "ventas/")
     print(response.json())
     return render_template('ventas_lista.html', ventas=response.json(), titulo="Lista de Ventas")
+
+@compras_ventas.route("/reporte/", methods=['GET'])
+@login_required
+def reporte():
+    if(request.args.get('año')):
+        anio = request.args['año']
+    else:
+        anio = datetime.datetime.now().year
+
+    response = requests.get(API_URL + "reporte/?año=" + str(anio))
+
+    if(response.status_code != 200):
+        flash('Ocurrio un error al obtener los datos. Vuelve a intentar.', 'danger')
+
+    return render_template('reporte.html', data=response.json(), titulo="Reporte", año = anio)
+
+
+
+@compras_ventas.route("/reportes/", methods=['GET'])
+@login_required
+def reportes():
+    start_year = datetime.datetime(2020,1,1).year
+    current_year = datetime.datetime.today().year
+    lista_anios = list(range(start_year, current_year+1, 1))
+    return render_template('reportes_lista.html', titulo="Lista de Reportes", anios=lista_anios)
