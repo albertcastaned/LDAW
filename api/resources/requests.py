@@ -42,6 +42,30 @@ class Producto_registrar(Resource):
                 )
         return 'OK', 201
 
+class Producto_modificar(Resource):
+    def get(self):
+        producto = Producto.query.filter_by(id = 1 ).first()
+        return  producto
+
+    def post(self):
+
+        producto = Producto.query.filter_by(id = "1" ).first()
+        producto.nombre_producto = request.json['nombre_producto'],
+        producto.descripcion = request.json['descripcion'],
+        producto.marca = request.json['marca'],
+        producto.precioVentaBase = request.json['precioVentaBase'],
+        producto.precioCompra = request.json['precioCompra'],
+        producto.proveedor = request.json['proveedor'],
+
+        try:
+            db.session.commit()
+        except IntegrityError as error:
+            db.session.rollback()
+            return Response(response=json.dumps(dict(error='UNIQUE constraint error')),
+                    status=501, mimetype='application/json'
+                )
+        return 'OK', 200
+
 class Usuarios_lista(Resource):
     def get(self):
         usuarios = Usuario.query.all()
@@ -106,9 +130,9 @@ class Inventario_view(Resource):
 
 class Reporte_view(Resource):
     def get(self):
-        ventasQuery = db.session.query(extract('month',Venta.fecha), 
+        ventasQuery = db.session.query(extract('month',Venta.fecha),
             func.round(func.sum(Venta.total).label('Total'),2)).filter(extract('year', Venta.fecha) == request.args['año']).group_by(extract('month',Venta.fecha)).order_by(extract('month',Venta.fecha)).all()
-        comprasQuery = db.session.query(extract('month',Compra.fecha), 
+        comprasQuery = db.session.query(extract('month',Compra.fecha),
             func.round(func.sum(Compra.total).label('Total'),2)).filter(extract('year', Compra.fecha) == request.args['año']).group_by(extract('month',Compra.fecha)).order_by(extract('month',Compra.fecha)).all()
 
         return jsonify(ventas = ventasQuery, compras = comprasQuery)

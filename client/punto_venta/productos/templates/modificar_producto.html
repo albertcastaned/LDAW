@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="row titulo">
+                    <legend class="border-bottom mb-12"><h2>{{titulo}}</h2></legend>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-center">
+                            {{ form.nombre_producto.label(class="form-control-label") }}
+
+                            {% if form.nombre_producto.errors %}
+                                {{ form.nombre_producto(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.nombre_producto.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.nombre_producto(class="form-control form-control-lg") }}
+                            {% endif %}
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.descripcion_producto.label(class="form-control-label") }}
+
+                        {% if form.descripcion_producto.errors %}
+                            {{ form.descripcion_producto(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.descripcion_producto.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.descripcion_producto(class="form-control form-control-lg") }}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <div class="col-md-6 col-center">
+
+                            {{ form.marca_producto.label(class="form-control-label") }}
+                    {% if form.marca_producto.errors %}
+                        {{ form.marca_producto(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.marca_producto.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.marca_producto(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.precio_venta.label(class="form-control-label") }}
+                    {% if form.precio_venta.errors %}
+                        {{ form.precio_venta(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.precio_venta.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.precio_venta(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.precio_compra.label(class="form-control-label") }}
+                    {% if form.precio_compra.errors %}
+                        {{ form.precio_compra(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.precio_compra.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.precio_compra(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <div class="col-md-6 col-center">
+
+                        {{ form.proveedor.label(class="form-control-label") }}
+                {% if form.proveedor.errors %}
+                    {{ form.proveedor(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.proveedor.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.proveedor(class="form-control form-control-lg") }}
+                {% endif %}
+                </div>
+
+            </div>
+            </fieldset>
+            <div class="form-group text-center">
+                {{ form.submit(class="btn btn-outline-success") }}
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
