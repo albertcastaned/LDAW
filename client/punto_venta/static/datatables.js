@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.table').DataTable({
+    var table = $('.table').DataTable({
         order: [],
         pageLength: 15,
         autoWidth: false,
@@ -12,6 +12,22 @@ $(document).ready(function() {
             {
                 extend: 'print',
                 text: 'Imprimir'
+            },
+            {
+                text: 'Enviar Correo',
+                action: function(e, dt, node, conf) {
+
+                    var data = dt.buttons.exportData();
+                    $.ajax({
+                        type: 'POST',
+                        url: "/correo",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function(data){
+                            alert("Se envio el correo exitosamente (Verificar en Correo No Deseado si no aparece)");
+                            }
+                      });
+                }
             }
         ],
         "language": {

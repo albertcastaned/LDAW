@@ -67,7 +67,6 @@ def registrar_venta():
 @login_required
 def ventas_lista():
     response = requests.get(API_URL + "ventas/")
-    print(response.json())
     return render_template('ventas_lista.html', ventas=response.json(), titulo="Lista de Ventas")
 
 @compras_ventas.route("/reporte/", methods=['GET'])
