@@ -85,3 +85,7 @@ img {
   display: none;
   font-size: 1rem;
 }
+
+.container{
+  display:none;
+}
