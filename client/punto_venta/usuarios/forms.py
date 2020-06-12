@@ -14,12 +14,12 @@ class MultiCheckboxField(SelectMultipleField):
 
 class RegistarUsuarioForm(FlaskForm):
     nombre_usuario = StringField('Nombre de Usuario', validators=[DataRequired(message="Llena los datos"), 
-        Length(min=5, max=20, message="La longitud del nombre de usuario debe de ser entre 5 a 20 caracteres")])
+        Length(min=5, max=20, message="La longitud del nombre de usuario debe de ser entre 5 a 20 carácteres")])
 
-    contrasenia = PasswordField('Contraseña', validators=[DataRequired(message="Llena los datos"), Length(min=5, max=20, message="La longitud del nombre de usuario debe de ser entre 5 a 20 caracteres")])
+    contrasenia = PasswordField('Contraseña', validators=[DataRequired(message="Llena los datos"), Length(min=5, max=20, message="La longitud del nombre de usuario debe de ser entre 5 a 20 carácteres")])
     confirmar_contrasenia = PasswordField('Confirmar Contraseña', validators=[DataRequired(message="Llena los datos"), EqualTo('contrasenia',message="Ambos campos de contraseña deben ser exactamente igual",), Length(min=5, max=20, message="La longitud del nombre de usuario debe de ser entre 5 a 20 caracteres")])
     
-    email = StringField('Correo Electronico', validators=[DataRequired(message="Llena los datos"), Email(message="Correo electronico invalido")])
+    email = StringField('Correo Electrónico', validators=[DataRequired(message="Llena los datos"), Email(message="Correo electrónico inválido")])
     nombre_completo = StringField('Nombre Completo', validators=[DataRequired(message="Llena los datos"), Length(min=1, max=120)])
     roles = MultiCheckboxField("Roles", coerce=int,validators=[DataRequired(message="Selecciona por lo menos un rol")])
     
@@ -29,4 +29,4 @@ class LoginForm(FlaskForm):
     nombre_usuario = StringField('Nombre de Usuario',
                         validators=[DataRequired()])
     contrasenia = PasswordField('Contraseña', validators=[DataRequired()])
-    submit = SubmitField('Iniciar Sesion')
+    submit = SubmitField('Iniciar Sesión')
