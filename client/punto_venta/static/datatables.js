@@ -24,9 +24,14 @@ $(document).ready(function() {
                         data: JSON.stringify(data),
                         contentType: 'application/json',
                         success: function(data){
-                            alert("Se envio el correo exitosamente (Verificar en Correo No Deseado si no aparece)");
-                            }
-                      });
+                            alert("Se envió el correo exitosamente (Verificar en Correo No Deseado si no aparece)");
+                            
+                        },
+                        error: function(data) { 
+                            console.log(data);
+                            alert("Error de conexión"); 
+                        }
+                    });
                 }
             }
         ],

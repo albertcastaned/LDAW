@@ -1,12 +1,27 @@
 @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 body {
+  font-family: 'Roboto', sans-serif;
   background: #fff;
   margin-top: 5rem;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  margin-bottom: 100px;
 }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+}
+
 main {
   flex: 1 0 auto;
 }
@@ -59,4 +74,18 @@ img {
   margin-right: auto;
   width: 100%;
   
+}
+
+.alert{
+  margin-top:2rem;
+  margin-left:10rem;
+  margin-right:10rem;
+  text-align: center;
+  padding: 1rem;
+  display: none;
+  font-size: 1rem;
+}
+
+.container{
+  display:none;
 }
