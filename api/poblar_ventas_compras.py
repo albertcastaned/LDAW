@@ -6,8 +6,8 @@ numProductos = Producto.query.count()
 ticketVenta = TicketVenta()
 ticketCompra = TicketCompra()
 
-start_date = datetime.date(2021, 1, 1)
-end_date = datetime.date(2021, 6, 29)
+start_date = datetime.date(2020, 1, 1)
+end_date = datetime.date(2020, 12, 29)
 for i in range(1,500):
 	usuarioV = usuario
 	productoV = Producto.query.filter_by(id=random.uniform(1,numProductos)).first()

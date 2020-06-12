@@ -4,7 +4,7 @@ from database.model import *
 from database.db import bcrypt
 from flask_restful import Resource
 import os, json
-from datetime import date
+from datetime import date, datetime
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import extract
 from sqlalchemy.sql import func
@@ -125,7 +125,7 @@ class Compra_view(Resource):
                 precioCompra = compra['precioCompra'],
                 cantidad = compra['cantidad'],
                 total = float(compra['precioCompra']) * float(compra['cantidad']),
-                fecha = date.today()
+                fecha = datetime.today()
             )
             db.session.add(nueva_compra)
 
@@ -153,7 +153,7 @@ class Venta_view(Resource):
                 precioVenta = venta['precioVenta'],
                 cantidad = venta['cantidad'],
                 total = float(venta['precioVenta']) * float(venta['cantidad']),
-                fecha = date.today()
+                fecha = datetime.today()
             )
             db.session.add(nueva_venta)
 
