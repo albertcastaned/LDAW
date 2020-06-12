@@ -55,4 +55,6 @@ def send_mail():
     }
     result = mailjet.send.create(data=data)
     print(result.status_code)
+    if(result.status_code != 200):
+        abort(500)
     return jsonify(status="success")
