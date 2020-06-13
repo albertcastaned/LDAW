@@ -9,16 +9,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-def is_administrator(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'roles' in session:
-            for rol in session['roles']:
-                if rol['nombre'].lower() == "Administrador".lower():
-                    return f(*args, **kwargs)
-        abort(403, "No tiene permiso para acceder a esta pagina.")
-    return decorated_function
-
 def is_gerente(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

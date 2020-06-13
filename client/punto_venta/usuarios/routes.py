@@ -8,11 +8,11 @@ usuarios = Blueprint('usuarios', __name__, template_folder='templates')
 
 
 @usuarios.route("/usuarios/registrar", methods=['GET', 'POST'])
+@login_required
+@is_gerente
 def registrar_usuario():
     form = RegistarUsuarioForm()
     response = requests.get(API_URL + "roles")
-
-
     if response.status_code == 200:
 
         choices = []
@@ -47,6 +47,8 @@ def registrar_usuario():
 
 
 @usuarios.route("/usuarios/", methods=['GET'])
+@is_gerente
+@login_required
 def usuarios_lista():
     response = requests.get(API_URL + "usuarios/")
     return render_template('usuarios_lista.html', usuarios=response.json(), titulo="Lista de Usuarios")
@@ -72,7 +74,6 @@ def login():
             session['logged_in'] = True
             session['username'] = json['nombre_usuario']
             session['roles'] = json['roles']
-            print(session['roles'])
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:

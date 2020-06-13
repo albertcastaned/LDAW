@@ -35,7 +35,6 @@ def registrar_producto():
 
 @productos.route("/productos/", methods=['GET'])
 @login_required
-@is_administrator
 def productos_lista():
     response = requests.get(API_URL + "productos/")
     return render_template('productos_lista.html', productos=response.json(), titulo="Lista de Productos")

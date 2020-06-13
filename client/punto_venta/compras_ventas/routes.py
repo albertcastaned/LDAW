@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint, session
 import requests, json
 from punto_venta import API_URL
-from punto_venta.utils import login_required
+from punto_venta.utils import *
 compras_ventas = Blueprint('compras_ventas', __name__, template_folder='templates')
 import datetime
 
@@ -33,6 +33,7 @@ def registrar_compra():
 
 @compras_ventas.route("/compras/", methods=['GET'])
 @login_required
+@is_gerente
 def compras_lista():
     response = requests.get(API_URL + "compras/")
     return render_template('compras_lista.html', compras=response.json(), titulo="Lista de Compras")
@@ -65,12 +66,14 @@ def registrar_venta():
 
 @compras_ventas.route("/ventas/", methods=['GET'])
 @login_required
+@is_gerente
 def ventas_lista():
     response = requests.get(API_URL + "ventas/")
     return render_template('ventas_lista.html', ventas=response.json(), titulo="Lista de Ventas")
 
 @compras_ventas.route("/reporte/", methods=['GET'])
 @login_required
+@is_gerente
 def reporte():
     if(request.args.get('año')):
         anio = request.args['año']
@@ -88,6 +91,7 @@ def reporte():
 
 @compras_ventas.route("/reportes/", methods=['GET'])
 @login_required
+@is_gerente
 def reportes():
     start_year = datetime.datetime(2020,1,1).year
     current_year = datetime.datetime.today().year
